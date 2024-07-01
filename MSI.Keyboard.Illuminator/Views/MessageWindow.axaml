@@ -1,0 +1,36 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+				xmlns:vm="using:MSI.Keyboard.Illuminator.ViewModels"
+        mc:Ignorable="d"
+        x:Class="MSI.Keyboard.Illuminator.Views.MessageWindow"
+				x:DataType="vm:MessageViewModel"
+        Title="{Binding Title}"
+				Icon="/Assets/logo.ico"
+				WindowStartupLocation="CenterScreen"
+				Width="500"
+				SizeToContent="Height"
+				CanResize="False">
+
+	<Design.DataContext>
+		<vm:MessageViewModel/>
+	</Design.DataContext>
+
+	<Grid RowDefinitions="*,Auto">
+
+		<TextBlock Grid.Row="0"
+							 Text="{Binding Message}"
+							 Margin="10"
+							 TextWrapping="Wrap"/>
+
+		<Button Grid.Row=" 1"
+						Command="{Binding Close}"
+						CommandParameter="{Binding $parent[Window]}"
+						Margin="0,0,10,10"
+						HorizontalAlignment="Right"
+						Content="Close" />
+
+	</Grid>
+
+</Window>

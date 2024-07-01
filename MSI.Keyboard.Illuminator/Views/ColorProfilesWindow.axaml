@@ -1,0 +1,15 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+				xmlns:v="using:MSI.Keyboard.Illuminator.Views"
+        mc:Ignorable="d"
+        x:Class="MSI.Keyboard.Illuminator.Views.ColorProfilesWindow"
+				Icon="/Assets/logo.ico"
+        Title="Edit color profiles"
+				Width="390" Height="250"
+				WindowStartupLocation="CenterOwner">
+
+	<v:ColorProfilesView />
+
+</Window>
