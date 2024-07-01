@@ -1,0 +1,26 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:MSI.Keyboard.Illuminator.ViewModels"
+						 x:Class="MSI.Keyboard.Illuminator.App"
+						 x:DataType="vm:TrayViewModel"
+             RequestedThemeVariant="Default">
+
+	<Design.DataContext>
+		<vm:TrayViewModel />
+	</Design.DataContext>
+
+	<Application.Styles>
+		<SimpleTheme />
+		<StyleInclude Source="avares://Avalonia.Controls.ColorPicker/Themes/Simple/Simple.xaml" />
+	</Application.Styles>
+
+	<TrayIcon.Icons>
+		<TrayIcons>
+			<TrayIcon Icon="/Assets/logo.ico"
+                ToolTipText="Chenge MSI keyboard colors"
+								Menu="{Binding TrayMenu}">
+			</TrayIcon>
+		</TrayIcons>
+	</TrayIcon.Icons>
+
+</Application>
