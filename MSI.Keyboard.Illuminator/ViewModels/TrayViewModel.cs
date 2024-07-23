@@ -92,7 +92,7 @@ public class TrayViewModel : ReactiveObject
 
         var activeColorProfile = appSettingsManager.GetActiveColorProfile();
         if (activeColorProfile != null)
-            SelectColorProfile.Execute(activeColorProfile).Subscribe();
+            SelectColorProfile.Execute(activeColorProfile).Subscribe(_ => { }, _ => { });
     }
 
     /// <summary>
