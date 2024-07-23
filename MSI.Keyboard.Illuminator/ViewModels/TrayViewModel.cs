@@ -63,8 +63,8 @@ public class TrayViewModel : ReactiveObject
         SelectColorProfile.ThrownExceptions.Subscribe(ex =>
         {
             WindowHelper.ShowMessageWindow(
-                "Changing keyboard colors failed!", 
-                ex.Message);
+                Resources.Resources.ColorChangeErrorTitle,
+                Resources.Resources.ColorChangeErrorMessage);
         });
 
         ShowColorProfiles = ReactiveCommand.Create(() =>
@@ -117,14 +117,14 @@ public class TrayViewModel : ReactiveObject
 
         newTrayMenu.Add(new NativeMenuItem() 
         {
-            Header = "Profiles", 
+            Header = Resources.Resources.ColorProfilesButtonText, 
             Command = ShowColorProfiles,
             Icon = AssetsHelper.GetImageFromAssets("palette16.png"), 
         });
         newTrayMenu.Add(new NativeMenuItemSeparator());
         newTrayMenu.Add(new NativeMenuItem() 
         {
-            Header = "Exit", 
+            Header = Resources.Resources.ExitButtonText, 
             Command = Exit, 
             Icon = AssetsHelper.GetImageFromAssets("exit16.png"), 
         });

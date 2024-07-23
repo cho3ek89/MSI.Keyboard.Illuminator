@@ -62,10 +62,8 @@ public partial class App : Application
             return;
 
         WindowHelper.ShowMessageWindow(
-            "MSI keyboard not found!",
-            "The supported \"MSI EPF USB\" SteelSeries keyboard has not been found!" +
-            Environment.NewLine +
-            "Exit an application as it is is not going to work properly anyway.");
+            Illuminator.Resources.Resources.DeviceNotFoundErrorTitle,
+            Illuminator.Resources.Resources.DeviceNotFoundErrorMessage);
     }
 
     protected static IAppSettingsManager GetAppSettingsManager(params string[] args)
@@ -73,7 +71,7 @@ public partial class App : Application
         var fileOption = new Option<FileInfo>(
             name: "--settings",
             getDefaultValue: () => new FileInfo("appsettings.xml"), 
-            description: "A full path to the settings file.");
+            description: Illuminator.Resources.Resources.SettingsParameterDescription);
 
         var settingsFile = fileOption.Parse(args).GetValueForOption(fileOption);
 
@@ -92,11 +90,11 @@ public partial class App : Application
         {
             // supress and use default settings
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             WindowHelper.ShowMessageWindow(
-                "Loading application settings failed!",
-                ex.Message);
+                Illuminator.Resources.Resources.AppSettingsLoadingErrorTitle,
+                Illuminator.Resources.Resources.AppSettingsLoadingErrorMessage);
         }
     }
 
@@ -106,11 +104,11 @@ public partial class App : Application
         {
             appSettingsManager.SaveSettings();
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             WindowHelper.ShowMessageWindow(
-                "Saving application settings failed!",
-                ex.Message);
+                Illuminator.Resources.Resources.AppSettingsSavingErrorTitle,
+                Illuminator.Resources.Resources.AppSettingsSavingErrorMessage);
         }
     }
 }

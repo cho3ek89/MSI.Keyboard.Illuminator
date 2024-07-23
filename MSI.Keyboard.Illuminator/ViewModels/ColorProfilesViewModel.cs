@@ -64,7 +64,7 @@ public class ColorProfilesViewModel : ReactiveObject
         AddNewColorProfile = ReactiveCommand.Create(() =>
         {
             var newColorProfile = ColorProfile.GetDefault();
-            newColorProfile.Name = $"Profile {ColorProfileViewModels?.Count + 1 ?? 1}";
+            newColorProfile.Name = $"{Resources.Resources.DefaultProfileName} {ColorProfileViewModels?.Count + 1 ?? 1}";
 
             ColorProfileViewModels.Add(new ColorProfileViewModel(newColorProfile));
         });

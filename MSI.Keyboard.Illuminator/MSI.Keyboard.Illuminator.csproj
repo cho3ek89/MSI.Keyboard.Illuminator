@@ -21,10 +21,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<AvaloniaResource Include="Assets\**" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<PackageReference Include="Avalonia" Version="11.0.11" />
 		<PackageReference Include="Avalonia.Controls.ColorPicker" Version="11.0.11" />
 		<PackageReference Include="Avalonia.Desktop" Version="11.0.11" />
@@ -33,6 +29,20 @@
 		<PackageReference Include="Avalonia.ReactiveUI" Version="11.0.11" />
 		<PackageReference Include="HidSharp" Version="2.1.0" />
 		<PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<AvaloniaResource Include="Assets\**" />
+
+		<Compile Update="Resources\Resources.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Resources.resx</DependentUpon>
+		</Compile>
+		<EmbeddedResource Update="Resources\Resources.resx">
+			<Generator>PublicResXFileCodeGenerator</Generator>
+			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
 	</ItemGroup>
 
 </Project>

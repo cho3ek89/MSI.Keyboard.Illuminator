@@ -3,6 +3,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 				xmlns:vm="using:MSI.Keyboard.Illuminator.ViewModels"
+				xmlns:r="using:MSI.Keyboard.Illuminator.Resources"
         mc:Ignorable="d"
         x:Class="MSI.Keyboard.Illuminator.Views.MessageWindow"
 				x:DataType="vm:MessageViewModel"
@@ -28,8 +29,11 @@
 						Command="{Binding Close}"
 						CommandParameter="{Binding $parent[Window]}"
 						Margin="0,0,10,10"
+						Width="70"
 						HorizontalAlignment="Right"
-						Content="Close" />
+						Content="{x:Static r:Resources.MessageCloseButtonText}"
+						ToolTip.Tip="{x:Static r:Resources.MessageCloseButtonTooltipText}"
+						ToolTip.ShowDelay="2000" />
 
 	</Grid>
 

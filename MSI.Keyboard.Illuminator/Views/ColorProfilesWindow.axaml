@@ -3,11 +3,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 				xmlns:v="using:MSI.Keyboard.Illuminator.Views"
+				xmlns:r="using:MSI.Keyboard.Illuminator.Resources"
         mc:Ignorable="d"
         x:Class="MSI.Keyboard.Illuminator.Views.ColorProfilesWindow"
 				Icon="/Assets/logo.ico"
-        Title="Edit color profiles"
-				Width="390" Height="250"
+        Title="{x:Static r:Resources.ColorProfilesWindowTitle}"
+				Width="420" Height="250"
 				WindowStartupLocation="CenterOwner">
 
 	<v:ColorProfilesView />
