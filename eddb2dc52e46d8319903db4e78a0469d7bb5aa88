@@ -1,0 +1,3 @@
+This is a workaround for a problem with 'Simple' theme of ColorView control.
+This change should be reverted after releasing this pull request:
+https://github.com/AvaloniaUI/Avalonia/pull/16654
