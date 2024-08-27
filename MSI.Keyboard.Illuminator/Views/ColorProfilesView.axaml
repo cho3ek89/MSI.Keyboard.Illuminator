@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 						 xmlns:v="using:MSI.Keyboard.Illuminator.Views"
 						 xmlns:vm="using:MSI.Keyboard.Illuminator.ViewModels"
+						 xmlns:r="using:MSI.Keyboard.Illuminator.Resources"
              mc:Ignorable="d"
              x:Class="MSI.Keyboard.Illuminator.Views.ColorProfilesView"
 						 x:DataType="vm:ColorProfilesViewModel">
@@ -23,7 +24,7 @@
 		
 		<Style Selector="Button.BottomPanel">
 			<Setter Property="Margin" Value="4"/>
-			<Setter Property="Width" Value="50"/>
+			<Setter Property="Width" Value="70"/>
 		</Style>
 
 		<Style Selector="Button.ProfilesPanel">
@@ -54,25 +55,25 @@
 										Background="{StaticResource PanelBackgroundColor}">
 					<Button Classes="ProfilesPanel"
 									Command="{Binding AddNewColorProfile}"
-									ToolTip.Tip="Add new color profile">
+									ToolTip.Tip="{x:Static r:Resources.ColorProfileAddTooltipText}">
 						<Image Source="/Assets/plus22.png" />
 					</Button>
 
 					<Button Classes="ProfilesPanel"
 									Command="{Binding RemoveSelectedColorProfile}"
-									ToolTip.Tip="Remove selected color profile">
+									ToolTip.Tip="{x:Static r:Resources.ColorProfileRemoveTooltipText}">
 						<Image Source="/Assets/minus22.png" />
 					</Button>
 
 					<Button Classes="ProfilesPanel"
 									Command="{Binding MoveSelectedColorProfileUp}"
-									ToolTip.Tip="Move selected color profile up">
+									ToolTip.Tip="{x:Static r:Resources.ColorProfileMoveUpTooltipText}">
 						<Image Source="/Assets/arrow-up22.png" />
 					</Button>
 
 					<Button Classes="ProfilesPanel"
 									Command="{Binding MoveSelectedColorProfileDown}"
-									ToolTip.Tip="Move selected color profile down">
+									ToolTip.Tip="{x:Static r:Resources.ColorProfileMoveDownTooltipText}">
 						<Image Source="/Assets/arrow-down22.png" />
 					</Button>
 				</StackPanel>
@@ -98,7 +99,7 @@
 				<ContentControl.ContentTemplate>
 					<DataTemplate DataType="vm:ColorProfileViewModel">
 						<ScrollViewer HorizontalScrollBarVisibility="Auto">
-							<v:ColorProfileView />
+							<v:ColorProfileView HorizontalAlignment="Center"/>
 						</ScrollViewer>
 					</DataTemplate>
 				</ContentControl.ContentTemplate>
@@ -109,13 +110,15 @@
 		<Grid Grid.Row="1" Background="{StaticResource PanelBackgroundColor}">
 			<StackPanel Orientation="Horizontal"
 									HorizontalAlignment="Right">
-				<Button Classes="BottomPanel" Content="Save"
+				<Button Classes="BottomPanel" 
 								Command="{Binding Save}"
-								ToolTip.Tip="Save all color profile changes" />
+								Content="{x:Static r:Resources.ColorProfilesSaveButtonText}"
+								ToolTip.Tip="{x:Static r:Resources.ColorProfilesSaveButtonTooltipText}" />
 
-				<Button Classes="BottomPanel" Content="Cancel"
+				<Button Classes="BottomPanel" 
 								Command="{Binding Cancel}"
-								ToolTip.Tip="Cancel all color profile changes" />
+								Content="{x:Static r:Resources.ColorProfilesCancelButtonText}"
+								ToolTip.Tip="{x:Static r:Resources.ColorProfilesCancelButtonTooltipText}" />
 			</StackPanel>
 		</Grid>
 

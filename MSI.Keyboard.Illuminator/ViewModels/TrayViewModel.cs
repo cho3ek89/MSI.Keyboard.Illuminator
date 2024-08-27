@@ -10,6 +10,7 @@ using MSI.Keyboard.Illuminator.Views;
 using ReactiveUI;
 
 using System;
+using System.IO;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
@@ -18,6 +19,8 @@ namespace MSI.Keyboard.Illuminator.ViewModels;
 
 public class TrayViewModel : ReactiveObject
 {
+    protected readonly IClassicDesktopStyleApplicationLifetime application;
+
     protected readonly IKeyboardService keyboardService;
 
     protected readonly IAppSettingsManager appSettingsManager;
@@ -41,13 +44,16 @@ public class TrayViewModel : ReactiveObject
 
     public TrayViewModel(
         IClassicDesktopStyleApplicationLifetime application, 
-        ColorProfilesViewModel colorProfilesViewModel, 
-        IKeyboardService keyboardService,
-        IAppSettingsManager appSettingsManager)
+        IKeyboardService keyboardService, 
+        IAppSettingsManager appSettingsManager, 
+        ColorProfilesViewModel colorProfilesViewModel)
     {
         ColorProfilesViewModel = colorProfilesViewModel;
+        this.application = application;
         this.keyboardService = keyboardService;
         this.appSettingsManager = appSettingsManager;
+
+        InitializeSettings();
 
         SelectColorProfile = ReactiveCommand.CreateFromTask<ColorProfile>(async colorProfile =>
         {
@@ -63,36 +69,37 @@ public class TrayViewModel : ReactiveObject
         SelectColorProfile.ThrownExceptions.Subscribe(ex =>
         {
             WindowHelper.ShowMessageWindow(
-                "Changing keyboard colors failed!", 
-                ex.Message);
+                Resources.Resources.ColorChangeErrorTitle,
+                Resources.Resources.ColorChangeErrorMessage);
         });
 
         ShowColorProfiles = ReactiveCommand.Create(() =>
         {
-            if (application.Windows.Any(w => w is ColorProfilesWindow))
+            if (this.application.Windows.Any(w => w is ColorProfilesWindow))
                 return;
 
-            WindowHelper.ShowColorProfilesWindow(colorProfilesViewModel);
+            ColorProfilesViewModel.LoadColorProfiles();
+            WindowHelper.ShowColorProfilesWindow(ColorProfilesViewModel);
         });
 
-        Exit = ReactiveCommand.Create(() => application.Shutdown(0));
+        Exit = ReactiveCommand.Create(() => FinalizeSettingsAndExit());
 
         ColorProfilesViewModel.Save.Subscribe(x => 
         {
             GenerateTrayMenu();
             SelectColorProfileOnTrayMenu(appSettingsManager.GetActiveColorProfile());
 
-            CloseAllColorProfilesWindows(application);
+            CloseAllColorProfilesWindows();
         });
 
         ColorProfilesViewModel.Cancel.Subscribe(x => 
-            CloseAllColorProfilesWindows(application));
+            CloseAllColorProfilesWindows());
 
         GenerateTrayMenu();
 
         var activeColorProfile = appSettingsManager.GetActiveColorProfile();
         if (activeColorProfile != null)
-            SelectColorProfile.Execute(activeColorProfile).Subscribe();
+            SelectColorProfile.Execute(activeColorProfile).Subscribe(_ => { }, _ => { });
     }
 
     /// <summary>
@@ -117,14 +124,14 @@ public class TrayViewModel : ReactiveObject
 
         newTrayMenu.Add(new NativeMenuItem() 
         {
-            Header = "Profiles", 
+            Header = Resources.Resources.ColorProfilesButtonText, 
             Command = ShowColorProfiles,
             Icon = AssetsHelper.GetImageFromAssets("palette16.png"), 
         });
         newTrayMenu.Add(new NativeMenuItemSeparator());
         newTrayMenu.Add(new NativeMenuItem() 
         {
-            Header = "Exit", 
+            Header = Resources.Resources.ExitButtonText, 
             Command = Exit, 
             Icon = AssetsHelper.GetImageFromAssets("exit16.png"), 
         });
@@ -151,13 +158,60 @@ public class TrayViewModel : ReactiveObject
     /// <summary>
     /// Closes all <see cref="ColorProfilesWindow"/> windows.
     /// </summary>
-    protected static void CloseAllColorProfilesWindows(
-        IClassicDesktopStyleApplicationLifetime application)
+    protected void CloseAllColorProfilesWindows()
     {
         for (int i = application.Windows.Count - 1; i >= 0; i--)
         {
             var colorProfilesWindow = application.Windows[i] as ColorProfilesWindow;
             colorProfilesWindow?.Close();
+        }
+    }
+
+    /// <summary>
+    /// Initializes an application settings loading, shows error in case of any issues.
+    /// </summary>
+    protected void InitializeSettings()
+    {
+        try
+        {
+            appSettingsManager.LoadSettings();
+        }
+        catch (FileNotFoundException)
+        {
+            // supress and use default settings
+        }
+        catch (Exception)
+        {
+            WindowHelper.ShowMessageWindow(
+                Resources.Resources.AppSettingsLoadingErrorTitle,
+                Resources.Resources.AppSettingsLoadingErrorMessage);
+        }
+    }
+
+    /// <summary>
+    /// Initializes an application settings saving and shutdown, shows error in case of any issues.
+    /// </summary>
+    protected void FinalizeSettingsAndExit()
+    {
+        try
+        {
+            appSettingsManager.SaveSettings();
+            application.Shutdown(0);
+        }
+        catch (Exception)
+        {
+            // in case of an issue show error window and postpone
+            // the shutdown until user closes that window
+
+            var saveSettingsErrorWindow  = WindowHelper.GetMessageWindow(
+                Resources.Resources.AppSettingsSavingErrorTitle,
+                Resources.Resources.AppSettingsSavingErrorMessage);
+
+            saveSettingsErrorWindow.Closed += (_, _) => application.Shutdown(0);
+            saveSettingsErrorWindow.Show();
+
+            var emptyTrayMenu = new NativeMenu();
+            TrayMenu = emptyTrayMenu;
         }
     }
 }
