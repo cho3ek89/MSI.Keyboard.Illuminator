@@ -51,15 +51,13 @@ public class ColorProfilesViewModel : ReactiveObject
 
         Selection = new();
 
-        LoadColorProfiles();
-
         Save = ReactiveCommand.Create(() =>
         {
             appSettingsManager.UpdateColorProfiles(
                 ColorProfileViewModels.Select(s => s.ColorProfile).Distinct());
         });
 
-        Cancel = ReactiveCommand.Create(LoadColorProfiles);
+        Cancel = ReactiveCommand.Create(() => { });
 
         AddNewColorProfile = ReactiveCommand.Create(() =>
         {
@@ -110,7 +108,7 @@ public class ColorProfilesViewModel : ReactiveObject
             canMoveSelectedColorProfileDown);
     }
 
-    protected void LoadColorProfiles()
+    public void LoadColorProfiles()
     {
         var colorProfiles = appSettingsManager.GetColorProfiles()
             .Select(cp => new ColorProfileViewModel(cp))
