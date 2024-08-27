@@ -1,8 +1,4 @@
-﻿using Avalonia.Controls;
-
-using ReactiveUI;
-
-using System.Reactive;
+﻿using ReactiveUI;
 
 namespace MSI.Keyboard.Illuminator.ViewModels;
 
@@ -24,13 +20,9 @@ public class MessageViewModel : ReactiveObject
         set => this.RaiseAndSetIfChanged(ref message, value);
     }
 
-    public ReactiveCommand<Window, Unit> Close { get; }
-
     public MessageViewModel(string title, string message)
     {
         Title = title;
         Message = message;
-
-        Close = ReactiveCommand.Create<Window>(window => window?.Close());
     }
 }
