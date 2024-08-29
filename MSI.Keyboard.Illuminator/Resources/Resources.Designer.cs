@@ -108,6 +108,25 @@ namespace MSI.Keyboard.Illuminator.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Parsing the command line arguments has failed!
+        ///The default values will be used..
+        /// </summary>
+        public static string CmdLineArgsParsingErrorMessage {
+            get {
+                return ResourceManager.GetString("CmdLineArgsParsingErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Command line arguments parsing failed!.
+        /// </summary>
+        public static string CmdLineArgsParsingErrorTitle {
+            get {
+                return ResourceManager.GetString("CmdLineArgsParsingErrorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Changing keyboard colors has failed!
         ///Make sure the supported &quot;MSI EPF USB&quot; SteelSeries keyboard is connected!.
         /// </summary>
@@ -313,15 +332,6 @@ namespace MSI.Keyboard.Illuminator.Resources {
         public static string MessageCloseButtonTooltipText {
             get {
                 return ResourceManager.GetString("MessageCloseButtonTooltipText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to A full path to the settings file..
-        /// </summary>
-        public static string SettingsParameterDescription {
-            get {
-                return ResourceManager.GetString("SettingsParameterDescription", resourceCulture);
             }
         }
     }

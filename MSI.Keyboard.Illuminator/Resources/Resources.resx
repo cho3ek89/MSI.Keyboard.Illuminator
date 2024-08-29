@@ -134,6 +134,13 @@ Make sure a target directory exists and You have an access to it.</value>
   <data name="AppTrayIconTooltipText" xml:space="preserve">
     <value>Change MSI keyboard colors!</value>
   </data>
+  <data name="CmdLineArgsParsingErrorMessage" xml:space="preserve">
+    <value>Parsing the command line arguments has failed!
+The default values will be used.</value>
+  </data>
+  <data name="CmdLineArgsParsingErrorTitle" xml:space="preserve">
+    <value>Command line arguments parsing failed!</value>
+  </data>
   <data name="ColorChangeErrorMessage" xml:space="preserve">
     <value>Changing keyboard colors has failed!
 Make sure the supported "MSI EPF USB" SteelSeries keyboard is connected!</value>
@@ -204,8 +211,5 @@ Exit an application as it is is not going to work properly anyway.</value>
   </data>
   <data name="MessageCloseButtonTooltipText" xml:space="preserve">
     <value>Close a window</value>
-  </data>
-  <data name="SettingsParameterDescription" xml:space="preserve">
-    <value>A full path to the settings file.</value>
   </data>
 </root>

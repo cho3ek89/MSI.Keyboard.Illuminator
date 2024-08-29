@@ -13,13 +13,11 @@ using System.Xml.Linq;
 namespace MSI.Keyboard.Illuminator.Providers;
 
 public class AppSettingsStreamer(
-    FileInfo sourceFile) : IAppSettingsStreamer
+    string settingsFilePath) : IAppSettingsStreamer
 {
-    protected readonly FileInfo sourceFile = sourceFile;
+    protected readonly string settingsFilePath = settingsFilePath;
 
     protected readonly Encoding encoding = Encoding.UTF8;
-
-    public FileInfo GetSourceFile() => sourceFile;
 
     public AppSettings LoadSettings()
     {
@@ -63,9 +61,9 @@ public class AppSettingsStreamer(
         await xml.SaveAsync(writer, cancellationToken);
     }
 
-    protected StreamReader GetStreamReader() => new(sourceFile.FullName, encoding);
+    protected StreamReader GetStreamReader() => new(settingsFilePath, encoding);
 
-    protected XmlTextWriter GetXmlTextWriter() => new(sourceFile.FullName, encoding)
+    protected XmlTextWriter GetXmlTextWriter() => new(settingsFilePath, encoding)
     {
         Formatting = Formatting.Indented,
     };
