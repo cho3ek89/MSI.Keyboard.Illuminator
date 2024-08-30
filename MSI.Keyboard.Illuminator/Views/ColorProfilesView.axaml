@@ -28,15 +28,15 @@
 		</Style>
 
 		<Style Selector="Button.ProfilesPanel">
-			<Setter Property="Height" Value="22"/>
-			<Setter Property="Width" Value="22"/>
+			<Setter Property="Height" Value="23"/>
+			<Setter Property="Width" Value="23"/>
 			<Setter Property="Margin" Value="2,4,2,4"/>
 
 		</Style>
 
 		<Style Selector="Image.ProfilesPanel">
-			<Setter Property="Height" Value="22"/>
-			<Setter Property="Width" Value="22"/>
+			<Setter Property="Height" Value="23"/>
+			<Setter Property="Width" Value="23"/>
 		</Style>
 	</UserControl.Styles>
 
@@ -44,7 +44,7 @@
 
 		<Grid Grid.Row="0">
 			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="3*" MinWidth="104"></ColumnDefinition>
+				<ColumnDefinition Width="3*" MinWidth="108"></ColumnDefinition>
 				<ColumnDefinition Width="3"></ColumnDefinition>
 				<ColumnDefinition Width="7*"></ColumnDefinition>
 			</Grid.ColumnDefinitions>
@@ -56,25 +56,25 @@
 					<Button Classes="ProfilesPanel"
 									Command="{Binding AddNewColorProfile}"
 									ToolTip.Tip="{x:Static r:Resources.ColorProfileAddTooltipText}">
-						<Image Source="/Assets/plus22.png" />
+						<Image Source="/Assets/plus23.png" />
 					</Button>
 
 					<Button Classes="ProfilesPanel"
 									Command="{Binding RemoveSelectedColorProfile}"
 									ToolTip.Tip="{x:Static r:Resources.ColorProfileRemoveTooltipText}">
-						<Image Source="/Assets/minus22.png" />
+						<Image Source="/Assets/minus23.png" />
 					</Button>
 
 					<Button Classes="ProfilesPanel"
 									Command="{Binding MoveSelectedColorProfileUp}"
 									ToolTip.Tip="{x:Static r:Resources.ColorProfileMoveUpTooltipText}">
-						<Image Source="/Assets/arrow-up22.png" />
+						<Image Source="/Assets/arrow-up23.png" />
 					</Button>
 
 					<Button Classes="ProfilesPanel"
 									Command="{Binding MoveSelectedColorProfileDown}"
 									ToolTip.Tip="{x:Static r:Resources.ColorProfileMoveDownTooltipText}">
-						<Image Source="/Assets/arrow-down22.png" />
+						<Image Source="/Assets/arrow-down23.png" />
 					</Button>
 				</StackPanel>
 
