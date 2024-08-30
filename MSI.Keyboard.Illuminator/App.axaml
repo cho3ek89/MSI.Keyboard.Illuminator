@@ -1,40 +1,39 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:vm="using:MSI.Keyboard.Illuminator.ViewModels"
-						 xmlns:r="using:MSI.Keyboard.Illuminator.Resources"
-						 x:Class="MSI.Keyboard.Illuminator.App"
-						 x:DataType="vm:TrayViewModel">
+             xmlns:r="using:MSI.Keyboard.Illuminator.Resources"
+             x:Class="MSI.Keyboard.Illuminator.App"
+             x:DataType="vm:TrayViewModel">
 
-	<Design.DataContext>
-		<vm:TrayViewModel />
-	</Design.DataContext>
+  <Design.DataContext>
+    <vm:TrayViewModel />
+  </Design.DataContext>
 
-	<Application.Resources>
-		<ResourceDictionary>
-			<ResourceDictionary.ThemeDictionaries>
-				<ResourceDictionary x:Key='Light'>
-					<SolidColorBrush x:Key='PanelBackgroundColor'>WhiteSmoke</SolidColorBrush>
-				</ResourceDictionary>
-				<ResourceDictionary x:Key='Dark'>
-					<SolidColorBrush x:Key='PanelBackgroundColor'>#343434</SolidColorBrush>
-				</ResourceDictionary>
-			</ResourceDictionary.ThemeDictionaries>
-		</ResourceDictionary>
-	</Application.Resources>
+  <Application.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.ThemeDictionaries>
+        <ResourceDictionary x:Key='Light'>
+          <SolidColorBrush x:Key='PanelBackgroundColor'>WhiteSmoke</SolidColorBrush>
+        </ResourceDictionary>
+        <ResourceDictionary x:Key='Dark'>
+          <SolidColorBrush x:Key='PanelBackgroundColor'>#343434</SolidColorBrush>
+        </ResourceDictionary>
+      </ResourceDictionary.ThemeDictionaries>
+    </ResourceDictionary>
+  </Application.Resources>
 
-	<Application.Styles>
-		<SimpleTheme />
-		<StyleInclude Source="avares://Avalonia.Controls.ColorPicker/Themes/Simple/Simple.xaml" />
-	</Application.Styles>
+  <Application.Styles>
+    <SimpleTheme />
+    <StyleInclude Source="avares://Avalonia.Controls.ColorPicker/Themes/Simple/Simple.xaml" />
+  </Application.Styles>
 
-	<TrayIcon.Icons>
-		<TrayIcons>
-			<TrayIcon Icon="/Assets/logo.ico"
+  <TrayIcon.Icons>
+    <TrayIcons>
+      <TrayIcon Icon="/Assets/logo.ico"
                 ToolTipText="{x:Static r:Resources.AppTrayIconTooltipText}"
-								Menu="{Binding TrayMenu}">
-			</TrayIcon>
-		</TrayIcons>
-	</TrayIcon.Icons>
-
+                Menu="{Binding TrayMenu}">
+      </TrayIcon>
+    </TrayIcons>
+  </TrayIcon.Icons>
 
 </Application>

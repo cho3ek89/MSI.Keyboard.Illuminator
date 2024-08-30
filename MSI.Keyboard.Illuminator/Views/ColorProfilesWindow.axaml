@@ -2,15 +2,15 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-				xmlns:v="using:MSI.Keyboard.Illuminator.Views"
-				xmlns:r="using:MSI.Keyboard.Illuminator.Resources"
+        xmlns:v="using:MSI.Keyboard.Illuminator.Views"
+        xmlns:r="using:MSI.Keyboard.Illuminator.Resources"
         mc:Ignorable="d"
         x:Class="MSI.Keyboard.Illuminator.Views.ColorProfilesWindow"
-				Icon="/Assets/logo.ico"
+        Icon="/Assets/logo.ico"
         Title="{x:Static r:Resources.ColorProfilesWindowTitle}"
-				Width="420" Height="250"
-				WindowStartupLocation="CenterOwner">
+        Width="420" Height="250"
+        WindowStartupLocation="CenterOwner">
 
-	<v:ColorProfilesView />
+  <v:ColorProfilesView />
 
 </Window>

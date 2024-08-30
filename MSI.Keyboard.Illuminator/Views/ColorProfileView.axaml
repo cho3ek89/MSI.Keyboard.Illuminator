@@ -2,89 +2,89 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-						 xmlns:vm="using:MSI.Keyboard.Illuminator.ViewModels"
-						 xmlns:r="using:MSI.Keyboard.Illuminator.Resources"
+             xmlns:vm="using:MSI.Keyboard.Illuminator.ViewModels"
+             xmlns:r="using:MSI.Keyboard.Illuminator.Resources"
              mc:Ignorable="d"
              x:Class="MSI.Keyboard.Illuminator.Views.ColorProfileView"
-						 x:DataType="vm:ColorProfileViewModel">
+             x:DataType="vm:ColorProfileViewModel">
 
-	<Design.DataContext>
-		<vm:ColorProfileViewModel/>
-	</Design.DataContext>
+  <Design.DataContext>
+    <vm:ColorProfileViewModel/>
+  </Design.DataContext>
 
-	<UserControl.Styles>
-		<Style Selector="ColorPicker">
-			<Setter Property="Margin" Value="4,2,4,2" />
-			<Setter Property="Width" Value="200" />
-			<!--Disables RGB/HSV selection-->
-			<Setter Property="IsColorModelVisible" Value="False" />
-		</Style>
+  <UserControl.Styles>
+    <Style Selector="ColorPicker">
+      <Setter Property="Margin" Value="4,2,4,2" />
+      <Setter Property="Width" Value="200" />
+      <!--Disables RGB/HSV selection-->
+      <Setter Property="IsColorModelVisible" Value="False" />
+    </Style>
 
-		<Style Selector="ComboBox">
-			<Setter Property="Margin" Value="4,2,4,2" />
-			<Setter Property="Width" Value="200" />
-		</Style>
+    <Style Selector="ComboBox">
+      <Setter Property="Margin" Value="4,2,4,2" />
+      <Setter Property="Width" Value="200" />
+    </Style>
 
-		<Style Selector="TextBlock">
-			<Setter Property="Margin" Value="4,2,4,2"/>
-			<Setter Property="VerticalAlignment" Value="Center"/>
-		</Style>
+    <Style Selector="TextBlock">
+      <Setter Property="Margin" Value="4,2,4,2"/>
+      <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
 
-		<!--Gotta be named as it braks TextBoxes in ColorPicker!-->
-		<Style Selector="TextBox.Name">
-			<Setter Property="Margin" Value="4,2,4,2"/>
-			<Setter Property="VerticalAlignment" Value="Center"/>
-			<Setter Property="Width" Value="200"/>
-		</Style>
+    <!--Gotta be named as it braks TextBoxes in ColorPicker!-->
+    <Style Selector="TextBox.Name">
+      <Setter Property="Margin" Value="4,2,4,2"/>
+      <Setter Property="VerticalAlignment" Value="Center"/>
+      <Setter Property="Width" Value="200"/>
+    </Style>
 
-		<!--Fixes for Simple theme of ColorView control-->
-		<Style Selector="TabItem">
-			<Setter Property="Background" Value="Transparent" />
-		</Style>
+    <!--Fixes for Simple theme of ColorView control-->
+    <Style Selector="TabItem">
+      <Setter Property="Background" Value="Transparent" />
+    </Style>
 
-		<Style Selector="NumericUpDown">
-			<Setter Property="Padding" Value="4,0" />
-			<Setter Property="VerticalContentAlignment" Value="Center" />
-		</Style>
+    <Style Selector="NumericUpDown">
+      <Setter Property="Padding" Value="4,0" />
+      <Setter Property="VerticalContentAlignment" Value="Center" />
+    </Style>
 
-		<Style Selector="TextBox#PART_HexTextBox">
-			<Setter Property="VerticalContentAlignment" Value="Center" />
-		</Style>
-		<!--Fixes for Simple theme of ColorView control-->
-	</UserControl.Styles>
+    <Style Selector="TextBox#PART_HexTextBox">
+      <Setter Property="VerticalContentAlignment" Value="Center" />
+    </Style>
+    <!--Fixes for Simple theme of ColorView control-->
+  </UserControl.Styles>
 
-	<Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto"
-				ColumnDefinitions="Auto,Auto"
-				Margin="3">
+  <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto"
+        ColumnDefinitions="Auto,Auto"
+        Margin="3">
 
-		<TextBlock Grid.Row="0" Grid.Column="0" 
-							 Text="{x:Static r:Resources.ColorProfileNameLabelText}" />
-		<TextBox Grid.Row="0" Grid.Column="1" Classes="Name"
-						 MaxLength="30"
-						 Watermark="Color profile name"
-						 Text="{Binding ColorProfile.Name}" />
+    <TextBlock Grid.Row="0" Grid.Column="0"
+               Text="{x:Static r:Resources.ColorProfileNameLabelText}" />
+    <TextBox Grid.Row="0" Grid.Column="1" Classes="Name"
+             MaxLength="30"
+             Watermark="Color profile name"
+             Text="{Binding ColorProfile.Name}" />
 
-		<TextBlock Grid.Row="1" Grid.Column="0" 
-							 Text="{x:Static r:Resources.ColorProfileBlinkingModeLabelText}" />
-		<ComboBox Grid.Row="1" Grid.Column="1"
-							ItemsSource="{Binding BlinkingModes, Mode=OneWay}"
-							SelectedItem="{Binding ColorProfile.BlinkingMode}" />
+    <TextBlock Grid.Row="1" Grid.Column="0"
+               Text="{x:Static r:Resources.ColorProfileBlinkingModeLabelText}" />
+    <ComboBox Grid.Row="1" Grid.Column="1"
+              ItemsSource="{Binding BlinkingModes, Mode=OneWay}"
+              SelectedItem="{Binding ColorProfile.BlinkingMode}" />
 
-		<TextBlock Grid.Row="2" Grid.Column="0" 
-							 Text="{x:Static r:Resources.ColorProfileLeftLabelText}" />
-		<ColorPicker Grid.Row="2" Grid.Column="1"
-								 Color="{Binding ColorProfile.LeftColor}" />
+    <TextBlock Grid.Row="2" Grid.Column="0"
+               Text="{x:Static r:Resources.ColorProfileLeftLabelText}" />
+    <ColorPicker Grid.Row="2" Grid.Column="1"
+                 Color="{Binding ColorProfile.LeftColor}" />
 
-		<TextBlock Grid.Row="3" Grid.Column="0" 
-							 Text="{x:Static r:Resources.ColorProfileCenterLabelText}" />
-		<ColorPicker Grid.Row="3" Grid.Column="1"
-								 Color="{Binding ColorProfile.CenterColor}" />
+    <TextBlock Grid.Row="3" Grid.Column="0"
+               Text="{x:Static r:Resources.ColorProfileCenterLabelText}" />
+    <ColorPicker Grid.Row="3" Grid.Column="1"
+                 Color="{Binding ColorProfile.CenterColor}" />
 
-		<TextBlock Grid.Row="4" Grid.Column="0" 
-							 Text="{x:Static r:Resources.ColorProfileRightLabelText}" />
-		<ColorPicker Grid.Row="4" Grid.Column="1"
-								 Color="{Binding ColorProfile.RightColor}" />
+    <TextBlock Grid.Row="4" Grid.Column="0"
+               Text="{x:Static r:Resources.ColorProfileRightLabelText}" />
+    <ColorPicker Grid.Row="4" Grid.Column="1"
+                 Color="{Binding ColorProfile.RightColor}" />
 
-	</Grid>
+  </Grid>
 
 </UserControl>

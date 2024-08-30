@@ -2,38 +2,38 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-				xmlns:vm="using:MSI.Keyboard.Illuminator.ViewModels"
-				xmlns:r="using:MSI.Keyboard.Illuminator.Resources"
+        xmlns:vm="using:MSI.Keyboard.Illuminator.ViewModels"
+        xmlns:r="using:MSI.Keyboard.Illuminator.Resources"
         mc:Ignorable="d"
         x:Class="MSI.Keyboard.Illuminator.Views.MessageWindow"
-				x:DataType="vm:MessageViewModel"
+        x:DataType="vm:MessageViewModel"
         Title="{Binding Title}"
-				Icon="/Assets/logo.ico"
-				WindowStartupLocation="CenterScreen"
-				Width="500"
-				SizeToContent="Height"
-				CanResize="False">
+        Icon="/Assets/logo.ico"
+        WindowStartupLocation="CenterScreen"
+        Width="500"
+        SizeToContent="Height"
+        CanResize="False">
 
-	<Design.DataContext>
-		<vm:MessageViewModel/>
-	</Design.DataContext>
+  <Design.DataContext>
+    <vm:MessageViewModel/>
+  </Design.DataContext>
 
-	<Grid RowDefinitions="*,Auto">
+  <Grid RowDefinitions="*,Auto">
 
-		<TextBlock Grid.Row="0"
-							 Text="{Binding Message}"
-							 Margin="10"
-							 TextWrapping="Wrap"/>
+    <TextBlock Grid.Row="0"
+               Text="{Binding Message}"
+               Margin="10"
+               TextWrapping="Wrap"/>
 
-		<Button Grid.Row=" 1"
-						Click="MessageCloseButtonClick"
-						Margin="0,0,10,10"
-						Width="70"
-						HorizontalAlignment="Right"
-						Content="{x:Static r:Resources.MessageCloseButtonText}"
-						ToolTip.Tip="{x:Static r:Resources.MessageCloseButtonTooltipText}"
-						ToolTip.ShowDelay="2000" />
+    <Button Grid.Row=" 1"
+            Click="MessageCloseButtonClick"
+            Margin="0,0,10,10"
+            Width="70"
+            HorizontalAlignment="Right"
+            Content="{x:Static r:Resources.MessageCloseButtonText}"
+            ToolTip.Tip="{x:Static r:Resources.MessageCloseButtonTooltipText}"
+            ToolTip.ShowDelay="2000" />
 
-	</Grid>
+  </Grid>
 
 </Window>

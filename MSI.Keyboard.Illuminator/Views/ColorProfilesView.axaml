@@ -2,122 +2,122 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-						 xmlns:v="using:MSI.Keyboard.Illuminator.Views"
-						 xmlns:vm="using:MSI.Keyboard.Illuminator.ViewModels"
-						 xmlns:r="using:MSI.Keyboard.Illuminator.Resources"
+             xmlns:v="using:MSI.Keyboard.Illuminator.Views"
+             xmlns:vm="using:MSI.Keyboard.Illuminator.ViewModels"
+             xmlns:r="using:MSI.Keyboard.Illuminator.Resources"
              mc:Ignorable="d"
              x:Class="MSI.Keyboard.Illuminator.Views.ColorProfilesView"
-						 x:DataType="vm:ColorProfilesViewModel">
+             x:DataType="vm:ColorProfilesViewModel">
 
-	<Design.DataContext>
-		<vm:ColorProfilesViewModel/>
-	</Design.DataContext>
+  <Design.DataContext>
+    <vm:ColorProfilesViewModel/>
+  </Design.DataContext>
 
-	<UserControl.Styles>
-		<Style Selector="Button">
-			<Setter Property="ToolTip.ShowDelay" Value="700"/>
-		</Style>
-		
-		<Style Selector="Button.BottomPanel">
-			<Setter Property="Margin" Value="4"/>
-			<Setter Property="Width" Value="70"/>
-		</Style>
+  <UserControl.Styles>
+    <Style Selector="Button">
+      <Setter Property="ToolTip.ShowDelay" Value="700"/>
+    </Style>
 
-		<Style Selector="Button.ProfilesPanel">
-			<Setter Property="Height" Value="23"/>
-			<Setter Property="Width" Value="23"/>
-			<Setter Property="Margin" Value="2,4,2,4"/>
+    <Style Selector="Button.BottomPanel">
+      <Setter Property="Margin" Value="4"/>
+      <Setter Property="Width" Value="70"/>
+    </Style>
 
-		</Style>
+    <Style Selector="Button.ProfilesPanel">
+      <Setter Property="Height" Value="23"/>
+      <Setter Property="Width" Value="23"/>
+      <Setter Property="Margin" Value="2,4,2,4"/>
 
-		<Style Selector="Image.ProfilesPanel">
-			<Setter Property="Height" Value="23"/>
-			<Setter Property="Width" Value="23"/>
-		</Style>
-	</UserControl.Styles>
+    </Style>
 
-	<Grid RowDefinitions="*,Auto">
+    <Style Selector="Image.ProfilesPanel">
+      <Setter Property="Height" Value="23"/>
+      <Setter Property="Width" Value="23"/>
+    </Style>
+  </UserControl.Styles>
 
-		<Grid Grid.Row="0">
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="3*" MinWidth="108"></ColumnDefinition>
-				<ColumnDefinition Width="3"></ColumnDefinition>
-				<ColumnDefinition Width="7*"></ColumnDefinition>
-			</Grid.ColumnDefinitions>
+  <Grid RowDefinitions="*,Auto">
 
-			<Grid Grid.Column="0" RowDefinitions="Auto,*">
-				<StackPanel Grid.Row="0"
-										Orientation="Horizontal"
-										Background="{DynamicResource PanelBackgroundColor}">
-					<Button Classes="ProfilesPanel"
-									Command="{Binding AddNewColorProfile}"
-									ToolTip.Tip="{x:Static r:Resources.ColorProfileAddTooltipText}">
-						<Image Source="/Assets/plus23.png" />
-					</Button>
+    <Grid Grid.Row="0">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="3*" MinWidth="108"></ColumnDefinition>
+        <ColumnDefinition Width="3"></ColumnDefinition>
+        <ColumnDefinition Width="7*"></ColumnDefinition>
+      </Grid.ColumnDefinitions>
 
-					<Button Classes="ProfilesPanel"
-									Command="{Binding RemoveSelectedColorProfile}"
-									ToolTip.Tip="{x:Static r:Resources.ColorProfileRemoveTooltipText}">
-						<Image Source="/Assets/minus23.png" />
-					</Button>
+      <Grid Grid.Column="0" RowDefinitions="Auto,*">
+        <StackPanel Grid.Row="0"
+                    Orientation="Horizontal"
+                    Background="{DynamicResource PanelBackgroundColor}">
+          <Button Classes="ProfilesPanel"
+                  Command="{Binding AddNewColorProfile}"
+                  ToolTip.Tip="{x:Static r:Resources.ColorProfileAddTooltipText}">
+            <Image Source="/Assets/plus23.png" />
+          </Button>
 
-					<Button Classes="ProfilesPanel"
-									Command="{Binding MoveSelectedColorProfileUp}"
-									ToolTip.Tip="{x:Static r:Resources.ColorProfileMoveUpTooltipText}">
-						<Image Source="/Assets/arrow-up23.png" />
-					</Button>
+          <Button Classes="ProfilesPanel"
+                  Command="{Binding RemoveSelectedColorProfile}"
+                  ToolTip.Tip="{x:Static r:Resources.ColorProfileRemoveTooltipText}">
+            <Image Source="/Assets/minus23.png" />
+          </Button>
 
-					<Button Classes="ProfilesPanel"
-									Command="{Binding MoveSelectedColorProfileDown}"
-									ToolTip.Tip="{x:Static r:Resources.ColorProfileMoveDownTooltipText}">
-						<Image Source="/Assets/arrow-down23.png" />
-					</Button>
-				</StackPanel>
+          <Button Classes="ProfilesPanel"
+                  Command="{Binding MoveSelectedColorProfileUp}"
+                  ToolTip.Tip="{x:Static r:Resources.ColorProfileMoveUpTooltipText}">
+            <Image Source="/Assets/arrow-up23.png" />
+          </Button>
 
-				<ListBox Grid.Row="1"
-								 ItemsSource="{Binding ColorProfileViewModels}"
-								 Selection="{Binding Selection}"
-								 SelectionMode="Single"
-								 BorderThickness="0">
-					<ListBox.ItemTemplate>
-						<DataTemplate>
-							<TextBlock Text="{Binding ColorProfile.Name}" />
-						</DataTemplate>
-					</ListBox.ItemTemplate>
-				</ListBox>
-			</Grid>
+          <Button Classes="ProfilesPanel"
+                  Command="{Binding MoveSelectedColorProfileDown}"
+                  ToolTip.Tip="{x:Static r:Resources.ColorProfileMoveDownTooltipText}">
+            <Image Source="/Assets/arrow-down23.png" />
+          </Button>
+        </StackPanel>
 
-			<GridSplitter Grid.Column="1"
-										ResizeDirection="Columns"
-										Background="{DynamicResource PanelBackgroundColor}" />
+        <ListBox Grid.Row="1"
+                 ItemsSource="{Binding ColorProfileViewModels}"
+                 Selection="{Binding Selection}"
+                 SelectionMode="Single"
+                 BorderThickness="0">
+          <ListBox.ItemTemplate>
+            <DataTemplate>
+              <TextBlock Text="{Binding ColorProfile.Name}" />
+            </DataTemplate>
+          </ListBox.ItemTemplate>
+        </ListBox>
+      </Grid>
 
-			<ContentControl Grid.Column="2" Content="{Binding Selection.SelectedItem}">
-				<ContentControl.ContentTemplate>
-					<DataTemplate DataType="vm:ColorProfileViewModel">
-						<ScrollViewer HorizontalScrollBarVisibility="Auto">
-							<v:ColorProfileView HorizontalAlignment="Center"/>
-						</ScrollViewer>
-					</DataTemplate>
-				</ContentControl.ContentTemplate>
-			</ContentControl>
+      <GridSplitter Grid.Column="1"
+                    ResizeDirection="Columns"
+                    Background="{DynamicResource PanelBackgroundColor}" />
 
-		</Grid>
+      <ContentControl Grid.Column="2" Content="{Binding Selection.SelectedItem}">
+        <ContentControl.ContentTemplate>
+          <DataTemplate DataType="vm:ColorProfileViewModel">
+            <ScrollViewer HorizontalScrollBarVisibility="Auto">
+              <v:ColorProfileView HorizontalAlignment="Center"/>
+            </ScrollViewer>
+          </DataTemplate>
+        </ContentControl.ContentTemplate>
+      </ContentControl>
 
-		<Grid Grid.Row="1" Background="{DynamicResource PanelBackgroundColor}">
-			<StackPanel Orientation="Horizontal"
-									HorizontalAlignment="Right">
-				<Button Classes="BottomPanel" 
-								Command="{Binding Save}"
-								Content="{x:Static r:Resources.ColorProfilesSaveButtonText}"
-								ToolTip.Tip="{x:Static r:Resources.ColorProfilesSaveButtonTooltipText}" />
+    </Grid>
 
-				<Button Classes="BottomPanel" 
-								Command="{Binding Cancel}"
-								Content="{x:Static r:Resources.ColorProfilesCancelButtonText}"
-								ToolTip.Tip="{x:Static r:Resources.ColorProfilesCancelButtonTooltipText}" />
-			</StackPanel>
-		</Grid>
+    <Grid Grid.Row="1" Background="{DynamicResource PanelBackgroundColor}">
+      <StackPanel Orientation="Horizontal"
+                  HorizontalAlignment="Right">
+        <Button Classes="BottomPanel"
+                Command="{Binding Save}"
+                Content="{x:Static r:Resources.ColorProfilesSaveButtonText}"
+                ToolTip.Tip="{x:Static r:Resources.ColorProfilesSaveButtonTooltipText}" />
 
-	</Grid>
+        <Button Classes="BottomPanel"
+                Command="{Binding Cancel}"
+                Content="{x:Static r:Resources.ColorProfilesCancelButtonText}"
+                ToolTip.Tip="{x:Static r:Resources.ColorProfilesCancelButtonTooltipText}" />
+      </StackPanel>
+    </Grid>
+
+  </Grid>
 
 </UserControl>
