@@ -3,12 +3,24 @@
              xmlns:vm="using:MSI.Keyboard.Illuminator.ViewModels"
 						 xmlns:r="using:MSI.Keyboard.Illuminator.Resources"
 						 x:Class="MSI.Keyboard.Illuminator.App"
-						 x:DataType="vm:TrayViewModel"
-             RequestedThemeVariant="Default">
+						 x:DataType="vm:TrayViewModel">
 
 	<Design.DataContext>
 		<vm:TrayViewModel />
 	</Design.DataContext>
+
+	<Application.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.ThemeDictionaries>
+				<ResourceDictionary x:Key='Light'>
+					<SolidColorBrush x:Key='PanelBackgroundColor'>WhiteSmoke</SolidColorBrush>
+				</ResourceDictionary>
+				<ResourceDictionary x:Key='Dark'>
+					<SolidColorBrush x:Key='PanelBackgroundColor'>#343434</SolidColorBrush>
+				</ResourceDictionary>
+			</ResourceDictionary.ThemeDictionaries>
+		</ResourceDictionary>
+	</Application.Resources>
 
 	<Application.Styles>
 		<SimpleTheme />
@@ -23,5 +35,6 @@
 			</TrayIcon>
 		</TrayIcons>
 	</TrayIcon.Icons>
+
 
 </Application>

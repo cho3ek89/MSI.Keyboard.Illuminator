@@ -2,6 +2,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using Avalonia.Styling;
 
 using MSI.Keyboard.Illuminator.Helpers;
 using MSI.Keyboard.Illuminator.Models;
@@ -30,6 +31,8 @@ public partial class App : Application
             WarnIfDeviceIsNotSupported(keyboardService);
 
             var cmdLineArgs = GetCmdLineArgs(application);
+
+            RequestedThemeVariant = (ThemeVariant)cmdLineArgs.Theme;
 
             var appSettingsManager = GetAppSettingsManager(cmdLineArgs);
 

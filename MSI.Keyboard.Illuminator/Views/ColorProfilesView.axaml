@@ -13,10 +13,6 @@
 		<vm:ColorProfilesViewModel/>
 	</Design.DataContext>
 
-	<UserControl.Resources>
-		<SolidColorBrush x:Key="PanelBackgroundColor">WhiteSmoke</SolidColorBrush>
-	</UserControl.Resources>
-
 	<UserControl.Styles>
 		<Style Selector="Button">
 			<Setter Property="ToolTip.ShowDelay" Value="700"/>
@@ -52,7 +48,7 @@
 			<Grid Grid.Column="0" RowDefinitions="Auto,*">
 				<StackPanel Grid.Row="0"
 										Orientation="Horizontal"
-										Background="{StaticResource PanelBackgroundColor}">
+										Background="{DynamicResource PanelBackgroundColor}">
 					<Button Classes="ProfilesPanel"
 									Command="{Binding AddNewColorProfile}"
 									ToolTip.Tip="{x:Static r:Resources.ColorProfileAddTooltipText}">
@@ -93,7 +89,7 @@
 
 			<GridSplitter Grid.Column="1"
 										ResizeDirection="Columns"
-										Background="{StaticResource PanelBackgroundColor}" />
+										Background="{DynamicResource PanelBackgroundColor}" />
 
 			<ContentControl Grid.Column="2" Content="{Binding Selection.SelectedItem}">
 				<ContentControl.ContentTemplate>
@@ -107,7 +103,7 @@
 
 		</Grid>
 
-		<Grid Grid.Row="1" Background="{StaticResource PanelBackgroundColor}">
+		<Grid Grid.Row="1" Background="{DynamicResource PanelBackgroundColor}">
 			<StackPanel Orientation="Horizontal"
 									HorizontalAlignment="Right">
 				<Button Classes="BottomPanel" 

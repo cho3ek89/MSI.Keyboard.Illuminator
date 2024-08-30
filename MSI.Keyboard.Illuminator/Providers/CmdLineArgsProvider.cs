@@ -1,4 +1,6 @@
-﻿using MSI.Keyboard.Illuminator.Models;
+﻿using Avalonia.Platform;
+
+using MSI.Keyboard.Illuminator.Models;
 
 using System.CommandLine;
 
@@ -10,6 +12,8 @@ namespace MSI.Keyboard.Illuminator.Providers
 
         protected readonly Option<string> settingsOption;
 
+        protected readonly Option<PlatformThemeVariant> themeOption;
+
         protected readonly RootCommand rootCommand;
 
         public CmdLineArgsProvider(string[] args)
@@ -20,7 +24,11 @@ namespace MSI.Keyboard.Illuminator.Providers
                 name: "--settings",
                 getDefaultValue: () => CmdLineArgs.GetDefault().SettingsFilePath);
 
-            rootCommand = [settingsOption];
+            themeOption = new Option<PlatformThemeVariant>(
+                name: "--theme",
+                getDefaultValue: () => CmdLineArgs.GetDefault().Theme);
+
+            rootCommand = [settingsOption, themeOption];
         }
 
         public CmdLineArgs GetCmdLineArgs()
@@ -28,8 +36,9 @@ namespace MSI.Keyboard.Illuminator.Providers
             var result = rootCommand.Parse(args);
 
             var settingsFilePath = result.GetValueForOption(settingsOption);
+            var theme = result.GetValueForOption(themeOption);
 
-            return new(settingsFilePath);
+            return new(settingsFilePath, theme);
         }
     }
 }
