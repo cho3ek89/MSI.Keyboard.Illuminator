@@ -9,7 +9,7 @@ jobs:
   build:
     name: Build
     env:
-      version: 1.1.0.0
+      version: 1.2.0.0
     strategy:
       matrix:
         os: [windows-latest, ubuntu-latest]
@@ -30,10 +30,21 @@ jobs:
           dotnet-version: '8.0.x'
 
       - name: Publish 'MSI Keyboard Illuminator'
-        run: dotnet publish 'MSI.Keyboard.Illuminator/MSI.Keyboard.Illuminator.csproj' -o 'binaries' -c 'Release' -r '${{ matrix.runtime }}' -v 'normal' -p:Version=${{ env.version }}
+        run: >
+          dotnet publish 'MSI.Keyboard.Illuminator/MSI.Keyboard.Illuminator.csproj'
+          -o 'binaries'
+          -c 'Release'
+          -r '${{ matrix.runtime }}'
+          -v 'normal'
+          -p:PublishAot=true
+          -p:Version=${{ env.version }}
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4.3.6
         with:
           name: MSI.Keyboard.Illuminator_${{ matrix.runtime }}_${{ env.version }}
-          path: binaries/
+          compression-level: 9
+          path: |
+            binaries/
+            # Dirs below end up in AoT compilation binaries, but they aren't necessary!
+            !binaries/pl-PL/

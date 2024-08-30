@@ -2,7 +2,7 @@
   "profiles": {
     "MSI.Keyboard.Illuminator": {
       "commandName": "Project",
-      "commandLineArgs": "--settings \"appsettings.xml\""
+      "commandLineArgs": "--settings \"appsettings.xml\" --theme \"Light\""
     }
   }
 }

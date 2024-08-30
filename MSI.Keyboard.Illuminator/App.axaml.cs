@@ -2,23 +2,20 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using Avalonia.Styling;
 
 using MSI.Keyboard.Illuminator.Helpers;
+using MSI.Keyboard.Illuminator.Models;
 using MSI.Keyboard.Illuminator.Providers;
 using MSI.Keyboard.Illuminator.Services;
 using MSI.Keyboard.Illuminator.ViewModels;
 
-using System.CommandLine;
-using System.IO;
+using System;
 
 namespace MSI.Keyboard.Illuminator;
 
 public partial class App : Application
 {
-    protected IAppSettingsManager appSettingsManager;
-
-    protected IKeyboardService keyboardService;
-
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
@@ -30,10 +27,14 @@ public partial class App : Application
         {
             application.ShutdownMode = ShutdownMode.OnExplicitShutdown;
 
-            keyboardService = GetKeyboardService();
-            WarnIfDeviceIsNotSupported();
+            var keyboardService = GetKeyboardService();
+            WarnIfDeviceIsNotSupported(keyboardService);
 
-            appSettingsManager = GetAppSettingsManager(application.Args);
+            var cmdLineArgs = GetCmdLineArgs(application);
+
+            RequestedThemeVariant = (ThemeVariant)cmdLineArgs.Theme;
+
+            var appSettingsManager = GetAppSettingsManager(cmdLineArgs);
 
             var colorProfilesViewModel = new ColorProfilesViewModel(appSettingsManager);
 
@@ -46,6 +47,25 @@ public partial class App : Application
 
         base.OnFrameworkInitializationCompleted();
     }
+
+    protected static CmdLineArgs GetCmdLineArgs(IClassicDesktopStyleApplicationLifetime application)
+    {
+        try
+        {
+            var cmdLineArgsProvider = new CmdLineArgsProvider(application.Args);
+
+            return cmdLineArgsProvider.GetCmdLineArgs();
+        }
+        catch (Exception)
+        {
+            WindowHelper.ShowMessageWindow(
+                Illuminator.Resources.Resources.CmdLineArgsParsingErrorTitle,
+                Illuminator.Resources.Resources.CmdLineArgsParsingErrorMessage);
+
+            return CmdLineArgs.GetDefault();
+        }
+    }
+
     protected static IKeyboardService GetKeyboardService()
     {
         var keyboardDevice = new KeyboardDevice();
@@ -53,7 +73,7 @@ public partial class App : Application
         return new KeyboardService(keyboardDevice);
     }
 
-    protected void WarnIfDeviceIsNotSupported()
+    protected static void WarnIfDeviceIsNotSupported(IKeyboardService keyboardService)
     {
         if (keyboardService.IsDeviceSupported())
             return;
@@ -63,16 +83,9 @@ public partial class App : Application
             Illuminator.Resources.Resources.DeviceNotFoundErrorMessage);
     }
 
-    protected static IAppSettingsManager GetAppSettingsManager(params string[] args)
+    protected static IAppSettingsManager GetAppSettingsManager(CmdLineArgs cmdLineArgs)
     {
-        var fileOption = new Option<FileInfo>(
-            name: "--settings",
-            getDefaultValue: () => new FileInfo("appsettings.xml"), 
-            description: Illuminator.Resources.Resources.SettingsParameterDescription);
-
-        var settingsFile = fileOption.Parse(args).GetValueForOption(fileOption);
-
-        var appSettingsStreamer = new AppSettingsStreamer(settingsFile);
+        var appSettingsStreamer = new AppSettingsStreamer(cmdLineArgs.SettingsFilePath);
 
         return new AppSettingsManager(appSettingsStreamer);
     }

@@ -134,6 +134,13 @@ Upewnij się, że katalog docelowy istnieje oraz masz do niego uprawnienia.</val
   <data name="AppTrayIconTooltipText" xml:space="preserve">
     <value>Zmień kolory klawiatury MSI!</value>
   </data>
+  <data name="CmdLineArgsParsingErrorMessage" xml:space="preserve">
+    <value>Parsowanie argumentów wiersza poleceń się nie powiodło!
+Zostaną użyte wartości domyślne.</value>
+  </data>
+  <data name="CmdLineArgsParsingErrorTitle" xml:space="preserve">
+    <value>Błąd parsowania argumentów wiersza poleceń!</value>
+  </data>
   <data name="ColorChangeErrorMessage" xml:space="preserve">
     <value>Zmiana kolorów klawiatury się nie powiodła!
 Upewnij się, że klawiatura "MSI EPF USB" SteelSeries jest podłączona.</value>
@@ -204,8 +211,5 @@ Zamknij aplikację, gdyż i tak nie będzie działać poprawnie.</value>
   </data>
   <data name="MessageCloseButtonTooltipText" xml:space="preserve">
     <value>Zamknij okno</value>
-  </data>
-  <data name="SettingsParameterDescription" xml:space="preserve">
-    <value>Pełna ścieżka do pliku z ustawieniami.</value>
   </data>
 </root>

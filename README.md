@@ -7,11 +7,13 @@ An application for changing colors of the "MSI EPF USB" SteelSeries keyboard mou
  - quickly and conveniently selecting a color profile from the tray menu
  - multiple languages
  - old school design
+ - native x64 binaries for Windows and Linux operating systems
 
 ## Command line arguments
 | Argument name | Description | Default value |
 | :---: | :---: | :---: |
 | settings | Full path to settings file (with all color profiles, etc.). | appsettings.xml |
+| theme | A color theme of an application (Light or Dark). | Light |
 
 ## Credits
 This project is partially based on [msi-keyboard-backlight](https://github.com/dpozimski/msi-keyboard-backlight) library.\
