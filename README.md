@@ -7,6 +7,7 @@ An application for changing colors of the "MSI EPF USB" SteelSeries keyboard mou
  - quickly and conveniently selecting a color profile from the tray menu
  - multiple languages
  - old school design
+ - native x64 binaries for Windows and Linux operating systems
 
 ## Command line arguments
 | Argument name | Description | Default value |
