@@ -169,6 +169,9 @@ Make sure the supported "MSI EPF USB" SteelSeries keyboard is connected!</value>
   <data name="ColorProfileNameLabelText" xml:space="preserve">
     <value>Name</value>
   </data>
+  <data name="ColorProfileNameWatermarkText" xml:space="preserve">
+    <value>Color profile name</value>
+  </data>
   <data name="ColorProfileRemoveTooltipText" xml:space="preserve">
     <value>Remove selected color profile</value>
   </data>

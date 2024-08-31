@@ -34,7 +34,9 @@
     <Style Selector="TextBox.Name">
       <Setter Property="Margin" Value="4,2,4,2"/>
       <Setter Property="VerticalAlignment" Value="Center"/>
+      <Setter Property="VerticalContentAlignment" Value="Center" />
       <Setter Property="Width" Value="200"/>
+      <Setter Property="Height" Value="30"/>
     </Style>
 
     <!--Fixes for Simple theme of ColorView control-->
@@ -61,7 +63,7 @@
                Text="{x:Static r:Resources.ColorProfileNameLabelText}" />
     <TextBox Grid.Row="0" Grid.Column="1" Classes="Name"
              MaxLength="30"
-             Watermark="Color profile name"
+             Watermark="{x:Static r:Resources.ColorProfileNameWatermarkText}"
              Text="{Binding ColorProfile.Name}" />
 
     <TextBlock Grid.Row="1" Grid.Column="0"

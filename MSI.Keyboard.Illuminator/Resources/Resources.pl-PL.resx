@@ -169,6 +169,9 @@ Upewnij się, że klawiatura "MSI EPF USB" SteelSeries jest podłączona.</value
   <data name="ColorProfileNameLabelText" xml:space="preserve">
     <value>Nazwa</value>
   </data>
+  <data name="ColorProfileNameWatermarkText" xml:space="preserve">
+    <value>Nazwa profilu kolorów</value>
+  </data>
   <data name="ColorProfileRemoveTooltipText" xml:space="preserve">
     <value>Usuń zaznaczony profil kolorów</value>
   </data>
