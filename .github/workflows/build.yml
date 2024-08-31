@@ -9,7 +9,7 @@ jobs:
   build:
     name: Build
     env:
-      version: 1.2.0.0
+      version: 1.2.1.0
     strategy:
       matrix:
         os: [windows-latest, ubuntu-latest]

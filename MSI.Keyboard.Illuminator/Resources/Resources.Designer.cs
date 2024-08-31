@@ -209,6 +209,15 @@ namespace MSI.Keyboard.Illuminator.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Color profile name.
+        /// </summary>
+        public static string ColorProfileNameWatermarkText {
+            get {
+                return ResourceManager.GetString("ColorProfileNameWatermarkText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remove selected color profile.
         /// </summary>
         public static string ColorProfileRemoveTooltipText {
