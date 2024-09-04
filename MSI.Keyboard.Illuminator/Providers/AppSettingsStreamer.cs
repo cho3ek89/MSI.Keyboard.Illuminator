@@ -5,8 +5,6 @@ using MSI.Keyboard.Illuminator.Models;
 using System;
 using System.IO;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -28,18 +26,6 @@ public class AppSettingsStreamer(
         return GetAppSettings(xml.Root);
     }
 
-    public async Task<AppSettings> LoadSettingsAsync() => 
-        await LoadSettingsAsync(CancellationToken.None);
-
-    public async Task<AppSettings> LoadSettingsAsync(CancellationToken cancellationToken)
-    {
-        using var stream = GetStreamReader();
-
-        var xml = await XDocument.LoadAsync(stream, LoadOptions.None, cancellationToken);
-
-        return GetAppSettings(xml.Root);
-    }
-
     public void SaveSettings(AppSettings appSettings)
     {
         var xml = GetXDocument(appSettings);
@@ -47,18 +33,6 @@ public class AppSettingsStreamer(
         using var writer = GetXmlTextWriter();
 
         xml.Save(writer);
-    }
-
-    public async Task SaveSettingsAsync(AppSettings appSettings) =>
-        await SaveSettingsAsync(appSettings, CancellationToken.None);
-
-    public async Task SaveSettingsAsync(AppSettings appSettings, CancellationToken cancellationToken)
-    {
-        var xml = GetXDocument(appSettings);
-
-        using var writer = GetXmlTextWriter();
-
-        await xml.SaveAsync(writer, cancellationToken);
     }
 
     protected StreamReader GetStreamReader() => new(settingsFilePath, encoding);
