@@ -22,12 +22,12 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.1.7
+        uses: actions/checkout@v4.2.2
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v4.0.1
+        uses: actions/setup-dotnet@v4.1.0
         with:
-          dotnet-version: '8.0.x'
+          dotnet-version: '9.0.x'
 
       - name: Publish 'MSI Keyboard Illuminator'
         run: >
@@ -40,7 +40,7 @@ jobs:
           -p:Version=${{ env.version }}
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v4.3.6
+        uses: actions/upload-artifact@v4.4.3
         with:
           name: MSI.Keyboard.Illuminator_${{ matrix.runtime }}_${{ env.version }}
           compression-level: 9
