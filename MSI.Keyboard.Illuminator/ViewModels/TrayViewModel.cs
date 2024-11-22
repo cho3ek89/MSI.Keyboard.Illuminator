@@ -10,7 +10,6 @@ using MSI.Keyboard.Illuminator.Views;
 using ReactiveUI;
 
 using System;
-using System.IO;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
@@ -53,8 +52,6 @@ public class TrayViewModel : ReactiveObject
         this.keyboardService = keyboardService;
         this.appSettingsManager = appSettingsManager;
 
-        InitializeSettings();
-
         SelectColorProfile = ReactiveCommand.CreateFromTask<ColorProfile>(async colorProfile =>
         {
             var configuration = IlluminationConfigurationFactory
@@ -82,7 +79,13 @@ public class TrayViewModel : ReactiveObject
             WindowHelper.ShowColorProfilesWindow(ColorProfilesViewModel);
         });
 
-        Exit = ReactiveCommand.Create(() => FinalizeSettingsAndExit());
+        Exit = ReactiveCommand.Create(() =>
+        {
+            this.application.TryShutdown(0);
+
+            var emptyTrayMenu = new NativeMenu();
+            TrayMenu = emptyTrayMenu;
+        });
 
         ColorProfilesViewModel.Save.Subscribe(x => 
         {
@@ -164,54 +167,6 @@ public class TrayViewModel : ReactiveObject
         {
             var colorProfilesWindow = application.Windows[i] as ColorProfilesWindow;
             colorProfilesWindow?.Close();
-        }
-    }
-
-    /// <summary>
-    /// Initializes an application settings loading, shows error in case of any issues.
-    /// </summary>
-    protected void InitializeSettings()
-    {
-        try
-        {
-            appSettingsManager.LoadSettings();
-        }
-        catch (FileNotFoundException)
-        {
-            // supress and use default settings
-        }
-        catch (Exception)
-        {
-            WindowHelper.ShowMessageWindow(
-                Resources.Resources.AppSettingsLoadingErrorTitle,
-                Resources.Resources.AppSettingsLoadingErrorMessage);
-        }
-    }
-
-    /// <summary>
-    /// Initializes an application settings saving and shutdown, shows error in case of any issues.
-    /// </summary>
-    protected void FinalizeSettingsAndExit()
-    {
-        try
-        {
-            appSettingsManager.SaveSettings();
-            application.Shutdown(0);
-        }
-        catch (Exception)
-        {
-            // in case of an issue show error window and postpone
-            // the shutdown until user closes that window
-
-            var saveSettingsErrorWindow  = WindowHelper.GetMessageWindow(
-                Resources.Resources.AppSettingsSavingErrorTitle,
-                Resources.Resources.AppSettingsSavingErrorMessage);
-
-            saveSettingsErrorWindow.Closed += (_, _) => application.Shutdown(0);
-            saveSettingsErrorWindow.Show();
-
-            var emptyTrayMenu = new NativeMenu();
-            TrayMenu = emptyTrayMenu;
         }
     }
 }
