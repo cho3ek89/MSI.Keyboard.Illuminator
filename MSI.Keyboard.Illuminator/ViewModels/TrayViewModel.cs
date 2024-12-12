@@ -10,7 +10,6 @@ using MSI.Keyboard.Illuminator.Views;
 using ReactiveUI;
 
 using System;
-using System.IO;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
@@ -21,12 +20,7 @@ public class TrayViewModel : ReactiveObject
 {
     protected readonly IClassicDesktopStyleApplicationLifetime application;
 
-    protected readonly IKeyboardService keyboardService;
-
     protected readonly IAppSettingsManager appSettingsManager;
-
-    public ColorProfilesViewModel ColorProfilesViewModel { get; }
-    
 
     protected NativeMenu trayMenu;
 
@@ -45,15 +39,10 @@ public class TrayViewModel : ReactiveObject
     public TrayViewModel(
         IClassicDesktopStyleApplicationLifetime application, 
         IKeyboardService keyboardService, 
-        IAppSettingsManager appSettingsManager, 
-        ColorProfilesViewModel colorProfilesViewModel)
+        IAppSettingsManager appSettingsManager)
     {
-        ColorProfilesViewModel = colorProfilesViewModel;
         this.application = application;
-        this.keyboardService = keyboardService;
         this.appSettingsManager = appSettingsManager;
-
-        InitializeSettings();
 
         SelectColorProfile = ReactiveCommand.CreateFromTask<ColorProfile>(async colorProfile =>
         {
@@ -78,22 +67,29 @@ public class TrayViewModel : ReactiveObject
             if (this.application.Windows.Any(w => w is ColorProfilesWindow))
                 return;
 
-            ColorProfilesViewModel.LoadColorProfiles();
-            WindowHelper.ShowColorProfilesWindow(ColorProfilesViewModel);
+            var colorProfilesViewModel = new ColorProfilesViewModel(appSettingsManager);
+            colorProfilesViewModel.LoadColorProfiles();
+
+            colorProfilesViewModel.Save.Subscribe(x =>
+            {
+                GenerateTrayMenu();
+                SelectColorProfileOnTrayMenu(appSettingsManager.GetActiveColorProfile());
+            });
+
+            var colorProfilesWindow = new ColorProfilesWindow
+            {
+                DataContext = colorProfilesViewModel,
+            };
+            colorProfilesWindow.Show();
         });
 
-        Exit = ReactiveCommand.Create(() => FinalizeSettingsAndExit());
-
-        ColorProfilesViewModel.Save.Subscribe(x => 
+        Exit = ReactiveCommand.Create(() =>
         {
-            GenerateTrayMenu();
-            SelectColorProfileOnTrayMenu(appSettingsManager.GetActiveColorProfile());
+            this.application.TryShutdown(0);
 
-            CloseAllColorProfilesWindows();
+            var emptyTrayMenu = new NativeMenu();
+            TrayMenu = emptyTrayMenu;
         });
-
-        ColorProfilesViewModel.Cancel.Subscribe(x => 
-            CloseAllColorProfilesWindows());
 
         GenerateTrayMenu();
 
@@ -152,66 +148,6 @@ public class TrayViewModel : ReactiveObject
             item.Icon = item.CommandParameter as ColorProfile == colorProfile
                 ? AssetsHelper.GetImageFromAssets("checked-mark16.png")
                 : null;
-        }
-    }
-
-    /// <summary>
-    /// Closes all <see cref="ColorProfilesWindow"/> windows.
-    /// </summary>
-    protected void CloseAllColorProfilesWindows()
-    {
-        for (int i = application.Windows.Count - 1; i >= 0; i--)
-        {
-            var colorProfilesWindow = application.Windows[i] as ColorProfilesWindow;
-            colorProfilesWindow?.Close();
-        }
-    }
-
-    /// <summary>
-    /// Initializes an application settings loading, shows error in case of any issues.
-    /// </summary>
-    protected void InitializeSettings()
-    {
-        try
-        {
-            appSettingsManager.LoadSettings();
-        }
-        catch (FileNotFoundException)
-        {
-            // supress and use default settings
-        }
-        catch (Exception)
-        {
-            WindowHelper.ShowMessageWindow(
-                Resources.Resources.AppSettingsLoadingErrorTitle,
-                Resources.Resources.AppSettingsLoadingErrorMessage);
-        }
-    }
-
-    /// <summary>
-    /// Initializes an application settings saving and shutdown, shows error in case of any issues.
-    /// </summary>
-    protected void FinalizeSettingsAndExit()
-    {
-        try
-        {
-            appSettingsManager.SaveSettings();
-            application.Shutdown(0);
-        }
-        catch (Exception)
-        {
-            // in case of an issue show error window and postpone
-            // the shutdown until user closes that window
-
-            var saveSettingsErrorWindow  = WindowHelper.GetMessageWindow(
-                Resources.Resources.AppSettingsSavingErrorTitle,
-                Resources.Resources.AppSettingsSavingErrorMessage);
-
-            saveSettingsErrorWindow.Closed += (_, _) => application.Shutdown(0);
-            saveSettingsErrorWindow.Show();
-
-            var emptyTrayMenu = new NativeMenu();
-            TrayMenu = emptyTrayMenu;
         }
     }
 }
