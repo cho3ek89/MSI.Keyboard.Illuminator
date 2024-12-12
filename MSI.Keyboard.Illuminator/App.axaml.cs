@@ -41,13 +41,10 @@ public partial class App : Application
             application.ShutdownRequested += (_, shutdownEventArgs) => 
                 FinalizeSettingsAndExit(appSettingsManager, application, shutdownEventArgs);
 
-            var colorProfilesViewModel = new ColorProfilesViewModel(appSettingsManager);
-
             DataContext = new TrayViewModel(
                 application, 
                 keyboardService, 
-                appSettingsManager, 
-                colorProfilesViewModel);
+                appSettingsManager);
         }
 
         base.OnFrameworkInitializationCompleted();

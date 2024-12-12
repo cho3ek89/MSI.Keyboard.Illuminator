@@ -34,8 +34,6 @@ public class ColorProfilesViewModel : ReactiveObject
 
     public ReactiveCommand<Unit, Unit> Save { get; }
 
-    public ReactiveCommand<Unit, Unit> Cancel { get; }
-
     public ReactiveCommand<Unit, Unit> AddNewColorProfile { get; }
 
     public ReactiveCommand<Unit, Unit> RemoveSelectedColorProfile { get; }
@@ -56,8 +54,6 @@ public class ColorProfilesViewModel : ReactiveObject
             appSettingsManager.UpdateColorProfiles(
                 ColorProfileViewModels.Select(s => s.ColorProfile).Distinct());
         });
-
-        Cancel = ReactiveCommand.Create(() => { });
 
         AddNewColorProfile = ReactiveCommand.Create(() =>
         {

@@ -20,12 +20,7 @@ public class TrayViewModel : ReactiveObject
 {
     protected readonly IClassicDesktopStyleApplicationLifetime application;
 
-    protected readonly IKeyboardService keyboardService;
-
     protected readonly IAppSettingsManager appSettingsManager;
-
-    public ColorProfilesViewModel ColorProfilesViewModel { get; }
-    
 
     protected NativeMenu trayMenu;
 
@@ -44,12 +39,9 @@ public class TrayViewModel : ReactiveObject
     public TrayViewModel(
         IClassicDesktopStyleApplicationLifetime application, 
         IKeyboardService keyboardService, 
-        IAppSettingsManager appSettingsManager, 
-        ColorProfilesViewModel colorProfilesViewModel)
+        IAppSettingsManager appSettingsManager)
     {
-        ColorProfilesViewModel = colorProfilesViewModel;
         this.application = application;
-        this.keyboardService = keyboardService;
         this.appSettingsManager = appSettingsManager;
 
         SelectColorProfile = ReactiveCommand.CreateFromTask<ColorProfile>(async colorProfile =>
@@ -75,8 +67,20 @@ public class TrayViewModel : ReactiveObject
             if (this.application.Windows.Any(w => w is ColorProfilesWindow))
                 return;
 
-            ColorProfilesViewModel.LoadColorProfiles();
-            WindowHelper.ShowColorProfilesWindow(ColorProfilesViewModel);
+            var colorProfilesViewModel = new ColorProfilesViewModel(appSettingsManager);
+            colorProfilesViewModel.LoadColorProfiles();
+
+            colorProfilesViewModel.Save.Subscribe(x =>
+            {
+                GenerateTrayMenu();
+                SelectColorProfileOnTrayMenu(appSettingsManager.GetActiveColorProfile());
+            });
+
+            var colorProfilesWindow = new ColorProfilesWindow
+            {
+                DataContext = colorProfilesViewModel,
+            };
+            colorProfilesWindow.Show();
         });
 
         Exit = ReactiveCommand.Create(() =>
@@ -86,17 +90,6 @@ public class TrayViewModel : ReactiveObject
             var emptyTrayMenu = new NativeMenu();
             TrayMenu = emptyTrayMenu;
         });
-
-        ColorProfilesViewModel.Save.Subscribe(x => 
-        {
-            GenerateTrayMenu();
-            SelectColorProfileOnTrayMenu(appSettingsManager.GetActiveColorProfile());
-
-            CloseAllColorProfilesWindows();
-        });
-
-        ColorProfilesViewModel.Cancel.Subscribe(x => 
-            CloseAllColorProfilesWindows());
 
         GenerateTrayMenu();
 
@@ -155,18 +148,6 @@ public class TrayViewModel : ReactiveObject
             item.Icon = item.CommandParameter as ColorProfile == colorProfile
                 ? AssetsHelper.GetImageFromAssets("checked-mark16.png")
                 : null;
-        }
-    }
-
-    /// <summary>
-    /// Closes all <see cref="ColorProfilesWindow"/> windows.
-    /// </summary>
-    protected void CloseAllColorProfilesWindows()
-    {
-        for (int i = application.Windows.Count - 1; i >= 0; i--)
-        {
-            var colorProfilesWindow = application.Windows[i] as ColorProfilesWindow;
-            colorProfilesWindow?.Close();
         }
     }
 }
