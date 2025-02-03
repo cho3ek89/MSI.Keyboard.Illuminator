@@ -4,6 +4,8 @@
 .vs/
 /MSI.Keyboard.Illuminator/bin/
 /MSI.Keyboard.Illuminator/obj/
+/MSI.Keyboard.Illuminator.Tests/bin/
+/MSI.Keyboard.Illuminator.Tests/obj/
 
 # Additional
 /binaries/

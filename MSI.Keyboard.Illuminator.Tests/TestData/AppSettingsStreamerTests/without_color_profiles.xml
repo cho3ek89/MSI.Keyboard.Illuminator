@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<AppSettings>
+  <ActiveColorProfile>
+    <Name>0</Name>
+    <BlinkingMode>0</BlinkingMode>
+    <LeftColor>
+      <A>0</A>
+      <R>0</R>
+      <G>0</G>
+      <B>0</B>
+    </LeftColor>
+    <CenterColor>
+      <A>0</A>
+      <R>0</R>
+      <G>0</G>
+      <B>0</B>
+    </CenterColor>
+    <RightColor>
+      <A>0</A>
+      <R>0</R>
+      <G>0</G>
+      <B>0</B>
+    </RightColor>
+  </ActiveColorProfile>
+  <ColorProfiles />
+</AppSettings>

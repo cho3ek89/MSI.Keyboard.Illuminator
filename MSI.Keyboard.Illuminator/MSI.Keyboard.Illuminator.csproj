@@ -44,4 +44,8 @@
     </EmbeddedResource>
   </ItemGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="MSI.Keyboard.Illuminator.Tests" />
+  </ItemGroup>
+
 </Project>
