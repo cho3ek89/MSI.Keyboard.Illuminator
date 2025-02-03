@@ -53,7 +53,7 @@ public class KeyboardDevice : IKeyboardDevice
         await SetFeature(data);
     }
 
-    public bool IsDeviceSupported() => 
+    public bool IsDeviceSupported() =>
         DeviceList.Local.TryGetHidDevice(out _, VendorId, ProductId);
 
     protected static Task SetFeature(byte[] data)

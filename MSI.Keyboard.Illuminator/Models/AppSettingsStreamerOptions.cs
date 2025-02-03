@@ -1,7 +1,7 @@
 ﻿namespace MSI.Keyboard.Illuminator.Models;
 
 public class AppSettingsStreamerOptions(
-    string appSettingsFilePath, 
+    string appSettingsFilePath,
     bool isXmlIndented = true)
 {
     public string AppSettingsFilePath { get; } = appSettingsFilePath;

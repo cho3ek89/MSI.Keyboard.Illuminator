@@ -29,7 +29,7 @@ public class TrayViewModel : ReactiveObject
         get => trayMenu;
         set => this.RaiseAndSetIfChanged(ref trayMenu, value);
     }
-    
+
     public ReactiveCommand<ColorProfile, Unit> SelectColorProfile { get; }
 
     public ReactiveCommand<Unit, Unit> ShowColorProfiles { get; }
@@ -37,9 +37,10 @@ public class TrayViewModel : ReactiveObject
     public ReactiveCommand<Unit, Unit> Exit { get; }
 
     public TrayViewModel(
-        IClassicDesktopStyleApplicationLifetime application, 
-        IKeyboardService keyboardService, 
-        IAppSettingsManager appSettingsManager)
+        IClassicDesktopStyleApplicationLifetime application,
+        IKeyboardService keyboardService,
+        IAppSettingsManager appSettingsManager,
+        ISchedulerProvider schedulerProvider)
     {
         this.application = application;
         this.appSettingsManager = appSettingsManager;
@@ -53,7 +54,7 @@ public class TrayViewModel : ReactiveObject
             appSettingsManager.UpdateActiveColorProfile(colorProfile);
 
             SelectColorProfileOnTrayMenu(colorProfile);
-        });
+        }, outputScheduler: schedulerProvider.MainThread);
 
         SelectColorProfile.ThrownExceptions.Subscribe(ex =>
         {
@@ -67,7 +68,7 @@ public class TrayViewModel : ReactiveObject
             if (this.application.Windows.Any(w => w is ColorProfilesWindow))
                 return;
 
-            var colorProfilesViewModel = new ColorProfilesViewModel(appSettingsManager);
+            var colorProfilesViewModel = new ColorProfilesViewModel(appSettingsManager, schedulerProvider);
             colorProfilesViewModel.LoadColorProfiles();
 
             colorProfilesViewModel.Save.Subscribe(x =>
@@ -81,7 +82,7 @@ public class TrayViewModel : ReactiveObject
                 DataContext = colorProfilesViewModel,
             };
             colorProfilesWindow.Show();
-        });
+        }, outputScheduler: schedulerProvider.MainThread);
 
         Exit = ReactiveCommand.Create(() =>
         {
@@ -89,7 +90,7 @@ public class TrayViewModel : ReactiveObject
 
             var emptyTrayMenu = new NativeMenu();
             TrayMenu = emptyTrayMenu;
-        });
+        }, outputScheduler: schedulerProvider.MainThread);
 
         GenerateTrayMenu();
 
@@ -107,8 +108,8 @@ public class TrayViewModel : ReactiveObject
 
         foreach (var colorProfile in appSettingsManager.GetColorProfiles())
         {
-            newTrayMenu.Add(new NativeMenuItem() 
-            { 
+            newTrayMenu.Add(new NativeMenuItem()
+            {
                 Header = colorProfile.Name,
                 Command = SelectColorProfile,
                 CommandParameter = colorProfile,
@@ -118,18 +119,18 @@ public class TrayViewModel : ReactiveObject
         if (newTrayMenu.Items.Any())
             newTrayMenu.Add(new NativeMenuItemSeparator());
 
-        newTrayMenu.Add(new NativeMenuItem() 
+        newTrayMenu.Add(new NativeMenuItem()
         {
-            Header = Resources.Resources.ColorProfilesButtonText, 
+            Header = Resources.Resources.ColorProfilesButtonText,
             Command = ShowColorProfiles,
-            Icon = AssetsHelper.GetImageFromAssets("palette16.png"), 
+            Icon = AssetsHelper.GetImageFromAssets("palette16.png"),
         });
         newTrayMenu.Add(new NativeMenuItemSeparator());
-        newTrayMenu.Add(new NativeMenuItem() 
+        newTrayMenu.Add(new NativeMenuItem()
         {
-            Header = Resources.Resources.ExitButtonText, 
-            Command = Exit, 
-            Icon = AssetsHelper.GetImageFromAssets("exit16.png"), 
+            Header = Resources.Resources.ExitButtonText,
+            Command = Exit,
+            Icon = AssetsHelper.GetImageFromAssets("exit16.png"),
         });
 
         TrayMenu = newTrayMenu;

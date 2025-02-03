@@ -3,7 +3,7 @@
 namespace MSI.Keyboard.Illuminator.Models;
 
 public class CmdLineArgs(
-    string settingsFilePath, 
+    string settingsFilePath,
     PlatformThemeVariant theme)
 {
     public string SettingsFilePath { get; } = settingsFilePath;
@@ -11,6 +11,6 @@ public class CmdLineArgs(
     public PlatformThemeVariant Theme { get; } = theme;
 
     public static CmdLineArgs GetDefault() => new(
-        "appsettings.xml", 
+        "appsettings.xml",
         PlatformThemeVariant.Light);
 }

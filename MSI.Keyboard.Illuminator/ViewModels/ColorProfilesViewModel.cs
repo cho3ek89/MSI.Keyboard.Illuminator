@@ -1,6 +1,7 @@
 ﻿using Avalonia.Controls.Selection;
 
 using MSI.Keyboard.Illuminator.Models;
+using MSI.Keyboard.Illuminator.Providers;
 using MSI.Keyboard.Illuminator.Services;
 
 using ReactiveUI;
@@ -43,7 +44,8 @@ public class ColorProfilesViewModel : ReactiveObject
     public ReactiveCommand<Unit, Unit> MoveSelectedColorProfileDown { get; }
 
     public ColorProfilesViewModel(
-        IAppSettingsManager appSettingsManager)
+        IAppSettingsManager appSettingsManager,
+        ISchedulerProvider schedulerProvider)
     {
         this.appSettingsManager = appSettingsManager;
 
@@ -53,7 +55,7 @@ public class ColorProfilesViewModel : ReactiveObject
         {
             appSettingsManager.UpdateColorProfiles(
                 ColorProfileViewModels.Select(s => s.ColorProfile).Distinct());
-        });
+        }, outputScheduler: schedulerProvider.MainThread);
 
         AddNewColorProfile = ReactiveCommand.Create(() =>
         {
@@ -61,7 +63,7 @@ public class ColorProfilesViewModel : ReactiveObject
             newColorProfile.Name = $"{Resources.Resources.DefaultProfileName} {ColorProfileViewModels?.Count + 1 ?? 1}";
 
             ColorProfileViewModels.Add(new ColorProfileViewModel(newColorProfile));
-        });
+        }, outputScheduler: schedulerProvider.MainThread);
 
         var canRemoveSelectedColorProfile = this
             .WhenAnyValue(s => s.Selection.SelectedItem)
@@ -76,7 +78,7 @@ public class ColorProfilesViewModel : ReactiveObject
 
             selection.SelectedIndex = idx;
 
-        }, canRemoveSelectedColorProfile);
+        }, canRemoveSelectedColorProfile, schedulerProvider.MainThread);
 
         void MoveSelectedColorProfile(bool moveUp)
         {
@@ -92,16 +94,18 @@ public class ColorProfilesViewModel : ReactiveObject
             .Select(s => s > 0);
 
         MoveSelectedColorProfileUp = ReactiveCommand.Create(
-            () => MoveSelectedColorProfile(true), 
-            canMoveSelectedColorProfileUp);
+            () => MoveSelectedColorProfile(true),
+            canMoveSelectedColorProfileUp,
+            schedulerProvider.MainThread);
 
         var canMoveSelectedColorProfileDown = this
             .WhenAnyValue(s => s.Selection.SelectedIndex)
             .Select(s => s >= 0 && s < ColorProfileViewModels.Count - 1);
 
         MoveSelectedColorProfileDown = ReactiveCommand.Create(
-            () => MoveSelectedColorProfile(false), 
-            canMoveSelectedColorProfileDown);
+            () => MoveSelectedColorProfile(false),
+            canMoveSelectedColorProfileDown,
+            schedulerProvider.MainThread);
     }
 
     public void LoadColorProfiles()

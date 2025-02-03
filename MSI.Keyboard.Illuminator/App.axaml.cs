@@ -38,13 +38,16 @@ public partial class App : Application
             var appSettingsManager = GetAppSettingsManager(cmdLineArgs);
             InitializeSettings(appSettingsManager);
 
-            application.ShutdownRequested += (_, shutdownEventArgs) => 
+            application.ShutdownRequested += (_, shutdownEventArgs) =>
                 FinalizeSettingsAndExit(appSettingsManager, application, shutdownEventArgs);
 
+            var schedulerProvider = new SchedulerProvider();
+
             DataContext = new TrayViewModel(
-                application, 
-                keyboardService, 
-                appSettingsManager);
+                application,
+                keyboardService,
+                appSettingsManager,
+                schedulerProvider);
         }
 
         base.OnFrameworkInitializationCompleted();
@@ -117,8 +120,8 @@ public partial class App : Application
     /// Initializes an application settings saving and shutdown, shows error in case of any issues.
     /// </summary>
     protected static void FinalizeSettingsAndExit(
-        IAppSettingsManager appSettingsManager, 
-        IClassicDesktopStyleApplicationLifetime application, 
+        IAppSettingsManager appSettingsManager,
+        IClassicDesktopStyleApplicationLifetime application,
         ShutdownRequestedEventArgs shutdownEventArgs)
     {
         try
