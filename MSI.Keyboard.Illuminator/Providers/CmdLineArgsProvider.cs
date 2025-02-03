@@ -4,41 +4,40 @@ using MSI.Keyboard.Illuminator.Models;
 
 using System.CommandLine;
 
-namespace MSI.Keyboard.Illuminator.Providers
+namespace MSI.Keyboard.Illuminator.Providers;
+
+public class CmdLineArgsProvider : ICmdLineArgsProvider
 {
-    public class CmdLineArgsProvider : ICmdLineArgsProvider
+    protected readonly string[] args;
+
+    protected readonly Option<string> settingsOption;
+
+    protected readonly Option<PlatformThemeVariant> themeOption;
+
+    protected readonly RootCommand rootCommand;
+
+    public CmdLineArgsProvider(string[] args)
     {
-        protected readonly string[] args;
+        this.args = args;
 
-        protected readonly Option<string> settingsOption;
+        settingsOption = new Option<string>(
+            name: "--settings",
+            getDefaultValue: () => CmdLineArgs.GetDefault().SettingsFilePath);
 
-        protected readonly Option<PlatformThemeVariant> themeOption;
+        themeOption = new Option<PlatformThemeVariant>(
+            name: "--theme",
+            getDefaultValue: () => CmdLineArgs.GetDefault().Theme);
 
-        protected readonly RootCommand rootCommand;
+        rootCommand = [settingsOption, themeOption];
+    }
 
-        public CmdLineArgsProvider(string[] args)
-        {
-            this.args = args;
+    public CmdLineArgs GetCmdLineArgs()
+    {
+        var result = rootCommand.Parse(args);
 
-            settingsOption = new Option<string>(
-                name: "--settings",
-                getDefaultValue: () => CmdLineArgs.GetDefault().SettingsFilePath);
+        var settingsFilePath = result.GetValueForOption(settingsOption);
+        var theme = result.GetValueForOption(themeOption);
 
-            themeOption = new Option<PlatformThemeVariant>(
-                name: "--theme",
-                getDefaultValue: () => CmdLineArgs.GetDefault().Theme);
-
-            rootCommand = [settingsOption, themeOption];
-        }
-
-        public CmdLineArgs GetCmdLineArgs()
-        {
-            var result = rootCommand.Parse(args);
-
-            var settingsFilePath = result.GetValueForOption(settingsOption);
-            var theme = result.GetValueForOption(themeOption);
-
-            return new(settingsFilePath, theme);
-        }
+        return new(settingsFilePath, theme);
     }
 }
