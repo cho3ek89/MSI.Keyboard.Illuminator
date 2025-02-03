@@ -10,7 +10,7 @@ using Xunit;
 
 namespace MSI.Keyboard.Illuminator.Tests;
 
-public  class KeyboardServiceTests
+public class KeyboardServiceTests
 {
     [Fact]
     public async Task ApplyConfigurationAsyncChangesKeyboardColorAndBlinkingMode()

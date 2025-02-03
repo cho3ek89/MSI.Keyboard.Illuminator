@@ -64,7 +64,7 @@ public class AppSettingsStreamer(
         if (appSettings.ActiveColorProfile != null)
         {
             var activeColorProfileElement = GetXElement(
-                appSettings.ActiveColorProfile, 
+                appSettings.ActiveColorProfile,
                 nameof(appSettings.ActiveColorProfile));
 
             appSettingsElement.Add(activeColorProfileElement);

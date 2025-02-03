@@ -63,10 +63,10 @@ public class AppSettingsManagerTests
         AppSettings savedAppSettings = null;
         var manager = GetAppSettingsManager(result => savedAppSettings = result);
 
-        var colorProfiles = new List<ColorProfile> 
+        var colorProfiles = new List<ColorProfile>
         {
-            TestDataGenerator.GetDummyColorProfile(3), 
-            TestDataGenerator.GetDummyColorProfile(4) 
+            TestDataGenerator.GetDummyColorProfile(3),
+            TestDataGenerator.GetDummyColorProfile(4)
         };
 
         manager.UpdateColorProfiles(colorProfiles);

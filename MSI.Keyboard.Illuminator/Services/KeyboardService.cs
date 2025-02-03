@@ -34,6 +34,6 @@ public class KeyboardService(IKeyboardDevice keyboardDevice) : IKeyboardService
         }
     }
 
-    protected async Task ApplyBlinkingModeAsync(BlinkingMode blinkingMode) => 
+    protected async Task ApplyBlinkingModeAsync(BlinkingMode blinkingMode) =>
         await keyboardDevice.ChangeModeAsync(blinkingMode);
 }

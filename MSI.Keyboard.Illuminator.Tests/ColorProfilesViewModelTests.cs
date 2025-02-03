@@ -94,7 +94,7 @@ public class ColorProfilesViewModelTests
         viewModel.Save.Execute().Subscribe();
 
         appSettingsManagerMock.Verify(
-            v => v.UpdateColorProfiles(It.IsAny<IEnumerable<ColorProfile>>()), 
+            v => v.UpdateColorProfiles(It.IsAny<IEnumerable<ColorProfile>>()),
             Times.Once);
     }
 }

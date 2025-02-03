@@ -44,7 +44,7 @@ public class ColorProfilesViewModel : ReactiveObject
     public ReactiveCommand<Unit, Unit> MoveSelectedColorProfileDown { get; }
 
     public ColorProfilesViewModel(
-        IAppSettingsManager appSettingsManager, 
+        IAppSettingsManager appSettingsManager,
         ISchedulerProvider schedulerProvider)
     {
         this.appSettingsManager = appSettingsManager;
@@ -94,8 +94,8 @@ public class ColorProfilesViewModel : ReactiveObject
             .Select(s => s > 0);
 
         MoveSelectedColorProfileUp = ReactiveCommand.Create(
-            () => MoveSelectedColorProfile(true), 
-            canMoveSelectedColorProfileUp, 
+            () => MoveSelectedColorProfile(true),
+            canMoveSelectedColorProfileUp,
             schedulerProvider.MainThread);
 
         var canMoveSelectedColorProfileDown = this
@@ -103,7 +103,7 @@ public class ColorProfilesViewModel : ReactiveObject
             .Select(s => s >= 0 && s < ColorProfileViewModels.Count - 1);
 
         MoveSelectedColorProfileDown = ReactiveCommand.Create(
-            () => MoveSelectedColorProfile(false), 
+            () => MoveSelectedColorProfile(false),
             canMoveSelectedColorProfileDown,
             schedulerProvider.MainThread);
     }

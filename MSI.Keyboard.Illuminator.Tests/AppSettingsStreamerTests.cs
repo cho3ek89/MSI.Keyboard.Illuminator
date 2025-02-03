@@ -45,10 +45,10 @@ public class AppSettingsStreamerTests
             Add(new AppSettings
             {
                 ActiveColorProfile = TestDataGenerator.GetDummyColorProfile(0),
-                ColorProfiles = 
+                ColorProfiles =
                 [
-                    TestDataGenerator.GetDummyColorProfile(0), 
-                    TestDataGenerator.GetDummyColorProfile(1), 
+                    TestDataGenerator.GetDummyColorProfile(0),
+                    TestDataGenerator.GetDummyColorProfile(1),
                     TestDataGenerator.GetDummyColorProfile(2)
                 ],
             },
@@ -57,10 +57,10 @@ public class AppSettingsStreamerTests
             Add(new AppSettings
             {
                 ActiveColorProfile = null,
-                ColorProfiles = 
+                ColorProfiles =
                 [
-                    TestDataGenerator.GetDummyColorProfile(0), 
-                    TestDataGenerator.GetDummyColorProfile(1), 
+                    TestDataGenerator.GetDummyColorProfile(0),
+                    TestDataGenerator.GetDummyColorProfile(1),
                     TestDataGenerator.GetDummyColorProfile(2)
                 ],
             },

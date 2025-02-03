@@ -28,7 +28,7 @@ public class TrayViewModelTests
     }
 
     [AvaloniaFact]
-    public void ExitClearsTrayMenuItemsAndTriesToShutDown() 
+    public void ExitClearsTrayMenuItemsAndTriesToShutDown()
     {
         var desktopMock = new Mock<IClassicDesktopStyleApplicationLifetime>();
         desktopMock.Setup(s => s.TryShutdown(It.IsAny<int>()))
@@ -40,7 +40,7 @@ public class TrayViewModelTests
             .Returns([]);
 
         var trayViewModel = new TrayViewModel(
-            desktopMock.Object, 
+            desktopMock.Object,
             Mock.Of<IKeyboardService>(),
             appSettingsManagerMock.Object,
             schedulerProvider);

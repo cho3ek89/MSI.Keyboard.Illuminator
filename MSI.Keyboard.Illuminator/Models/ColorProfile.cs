@@ -51,10 +51,10 @@ public class ColorProfile : ReactiveObject, ICloneable
     public ColorProfile() { }
 
     public ColorProfile(
-        string name, 
-        BlinkingMode blinkingMode, 
-        Color leftColor, 
-        Color centerColor, 
+        string name,
+        BlinkingMode blinkingMode,
+        Color leftColor,
+        Color centerColor,
         Color rightColor)
     {
         Name = name;
@@ -80,7 +80,7 @@ public class ColorProfile : ReactiveObject, ICloneable
         return left.Equals(right);
     }
 
-    public static bool operator !=(ColorProfile left, ColorProfile right) => 
+    public static bool operator !=(ColorProfile left, ColorProfile right) =>
         !(left == right);
 
     public object Clone() => new ColorProfile(
@@ -92,7 +92,7 @@ public class ColorProfile : ReactiveObject, ICloneable
 
     public override bool Equals(object obj)
     {
-        if (obj is not ColorProfile other) 
+        if (obj is not ColorProfile other)
             return false;
 
         return Name == other.Name
@@ -103,9 +103,9 @@ public class ColorProfile : ReactiveObject, ICloneable
     }
 
     public override int GetHashCode() => HashCode.Combine(
-        Name, 
-        BlinkingMode, 
-        LeftColor, 
-        CenterColor, 
+        Name,
+        BlinkingMode,
+        LeftColor,
+        CenterColor,
         RightColor);
 }
