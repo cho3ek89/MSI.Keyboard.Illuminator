@@ -41,10 +41,13 @@ public partial class App : Application
             application.ShutdownRequested += (_, shutdownEventArgs) => 
                 FinalizeSettingsAndExit(appSettingsManager, application, shutdownEventArgs);
 
+            var schedulerProvider = new SchedulerProvider();
+
             DataContext = new TrayViewModel(
                 application, 
                 keyboardService, 
-                appSettingsManager);
+                appSettingsManager,
+                schedulerProvider);
         }
 
         base.OnFrameworkInitializationCompleted();

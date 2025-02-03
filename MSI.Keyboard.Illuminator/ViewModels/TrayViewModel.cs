@@ -39,7 +39,8 @@ public class TrayViewModel : ReactiveObject
     public TrayViewModel(
         IClassicDesktopStyleApplicationLifetime application, 
         IKeyboardService keyboardService, 
-        IAppSettingsManager appSettingsManager)
+        IAppSettingsManager appSettingsManager, 
+        ISchedulerProvider schedulerProvider)
     {
         this.application = application;
         this.appSettingsManager = appSettingsManager;
@@ -53,7 +54,7 @@ public class TrayViewModel : ReactiveObject
             appSettingsManager.UpdateActiveColorProfile(colorProfile);
 
             SelectColorProfileOnTrayMenu(colorProfile);
-        });
+        }, outputScheduler: schedulerProvider.MainThread);
 
         SelectColorProfile.ThrownExceptions.Subscribe(ex =>
         {
@@ -67,7 +68,7 @@ public class TrayViewModel : ReactiveObject
             if (this.application.Windows.Any(w => w is ColorProfilesWindow))
                 return;
 
-            var colorProfilesViewModel = new ColorProfilesViewModel(appSettingsManager);
+            var colorProfilesViewModel = new ColorProfilesViewModel(appSettingsManager, schedulerProvider);
             colorProfilesViewModel.LoadColorProfiles();
 
             colorProfilesViewModel.Save.Subscribe(x =>
@@ -81,7 +82,7 @@ public class TrayViewModel : ReactiveObject
                 DataContext = colorProfilesViewModel,
             };
             colorProfilesWindow.Show();
-        });
+        }, outputScheduler: schedulerProvider.MainThread);
 
         Exit = ReactiveCommand.Create(() =>
         {
@@ -89,7 +90,7 @@ public class TrayViewModel : ReactiveObject
 
             var emptyTrayMenu = new NativeMenu();
             TrayMenu = emptyTrayMenu;
-        });
+        }, outputScheduler: schedulerProvider.MainThread);
 
         GenerateTrayMenu();
 
