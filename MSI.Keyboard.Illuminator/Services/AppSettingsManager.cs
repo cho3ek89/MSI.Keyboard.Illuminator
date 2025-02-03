@@ -8,9 +8,9 @@ using System.Reactive.Linq;
 namespace MSI.Keyboard.Illuminator.Services;
 
 public class AppSettingsManager(
-    AppSettingsStreamer appSettingsStreamer) : IAppSettingsManager
+    IAppSettingsStreamer appSettingsStreamer) : IAppSettingsManager
 {
-    protected AppSettingsStreamer appSettingsStreamer = appSettingsStreamer;
+    protected IAppSettingsStreamer appSettingsStreamer = appSettingsStreamer;
 
     protected AppSettings appSettings = new();
 
